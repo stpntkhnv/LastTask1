@@ -12,7 +12,6 @@ using System.Text.Json;
 
 namespace LastTask1.Controllers
 {
-    [Authorize]
     public class ItemController : Controller
     {
 

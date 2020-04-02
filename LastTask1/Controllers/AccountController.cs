@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CustomIdentityApp.Controllers
 {
-    [Authorize]
+
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -19,10 +19,6 @@ namespace CustomIdentityApp.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
-
-
-
-
         [HttpGet]
         public IActionResult Register()
         {
