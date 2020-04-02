@@ -1,0 +1,122 @@
+﻿@model LastTask1.ViewModels.CollectionViewModel
+@using System.Text.Json;
+@using System.Text;
+@{
+    ViewData["Title"] = "Collection";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script type="text/javascript">
+    $('#container').addClass('container-fluid');
+    $('#container').removeClass('container');
+</script>
+<link href="~/css/Collection.css" rel="stylesheet" />
+<div class="wrapper row bg-white m-0 p-0 w-100" id="wrap" style="box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
+													  -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
+													  -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);">
+    <div class="col-lg-4 h-100 border-right border-3">
+        <h1 class="text-center m-5">Collection @Model.Collection.Title</h1>
+        <img src="@Model.Collection.Img" class="w-100">
+        <p class="h4-responsive pt-3">Theme: @Model.Collection.Theme</p>
+        <p class="h4-responsive">Items: @Model.Collection.nItems</p>
+        <p class="h4-responsive">Creater: @Model.User.UserName</p>
+        <p class="h4-responsive mt-5">Description:</p>
+        <p class="">@Model.Collection.Description</p>
+        <div class="btn btn-warning w-50 mb-5 mt-5" style="margin-left: 25%">
+            Edit collection
+        </div>
+    </div>
+    <div class="col d-flex flex-column align-items-center " id="cont">
+        <p class="h3-responsive m-5 text-center">Items in collection</p>
+        <p>Sort by:   Sale  |  Xyu  |  4Jien</p>
+
+
+
+
+
+        <div class="button-group sort-by-button-group">
+            <button data-sort-by="original-order">original order</button>
+            <button data-sort-by="name">name</button>
+            <button data-sort-by="symbol">symbol</button>
+            <button data-sort-by="number">number</button>
+            <button data-sort-by="weight">weight</button>
+            <button data-sort-by="category">category</button>
+        </div>
+        <div class="grid container-fluid m-0 p-0">
+            <div class="row">
+                @foreach (var item in Model.Items)
+                {
+                    var ItemFields = JsonSerializer.Deserialize<Dictionary<string, string>>(item.OptionalFields);
+                    @:<div class=" item col-xl-4 col-md-6 col-12 mt-3 mx-0" id="card">
+                        <div class="card w-100 bg-white d-inline-flex flex-column align-items-center justify-content-between" style="box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
+                                                                              -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
+                                                                              -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);">
+                            <img src="@item.ImageUrl" class="w-100">
+                            <p class="h3-responsive name">@item.Title</p>
+                            <p class="p-3" style="max-height: 20.5em; overflow: hidden;">
+                                @item.Description
+                            </p>
+                            @foreach (var str in ItemFields)
+                            {
+                                @: <p class="@str.Key.Replace(" ", "")">@str.Key : @str.Value</p>
+                            }
+                            <div class="btn-group w-100">
+                                <form asp-controller="Item" asp-action="Item" class="w-100 h-100">
+                                    <button type="submit" name="itemId" value="@item.Id" class="btn btn-success w-25 p-0 pt-2 pb-2">View</button>
+                                    <button type="submit" name="itemId" value="@item.Id" asp-controller="Item" asp-action="Edit" class="btn btn-warning w-25 p-0 pt-2 pb-2">Edit</button>
+                                    <button type="submit" name="itemId" value="@item.Id" class="btn btn-danger w-25 p-0 pt-2 pb-2">Delete</button>
+                                </form>
+                                
+                            </div>
+                        </div>
+                    @:</div>
+                }
+            </div>
+        </div>
+
+
+    </div><!-- /.container -->
+    <form>
+        <button name="collectionId" asp-controller="Item" asp-action="Create" value="@Model.Collection.Id" type="submit" class="btn btn-black">Xyu</button>
+    </form>
+</div>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../../../../assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
+<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
+<script src="~/js/Collection.js" type="text/javascript"></script>
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
+<script type="text/javascript">
+    var $grid = $('.grid').isotope({
+        itemSelector: '.item',
+        masonry: {
+            columnWidth: '.item'
+        }    
+        });
+
+// bind sort button click
+$('.sort-by-button-group').on( 'click', 'button', function() {
+  var sortValue = $(this).attr('data-sort-value');
+  $grid.isotope({ sortBy: sortValue });
+});
+
+// change is-checked class on buttons
+$('.button-group').each( function( i, buttonGroup ) {
+  var $buttonGroup = $( buttonGroup );
+  $buttonGroup.on( 'click', 'button', function() {
+    $buttonGroup.find('.is-checked').removeClass('is-checked');
+    $( this ).addClass('is-checked');
+  });
+});
+
+</script>

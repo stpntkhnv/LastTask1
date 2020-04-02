@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Starter Template for Bootstrap</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/css/mdb.min.css" rel="stylesheet">
+
+    @RenderSection("styles", required: false)
+</head>
+
+<body>
+    <!--Main Navigation-->
+    <header>
+
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light d-flex scrolling-navbar">
+            <a class="navbar-brand" href="#"><strong>Itransition</strong></a>
+
+            <!-- Search form -->
+            <form class="form-inline d-flex" style="flex: 1">
+                <div class="md-form my-0 d-flex" style="flex: 1">
+                    <input class="form-control mr-sm-2" type="Search" onkeyup="search(event)" placeholder="Search" aria-label="Search" id="searchString" style="flex: 1">
+                </div>
+            </form>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item align-items-center d-lg-none d-flex">
+                        <a class="mr-2 nav-link">ADMIN</a>
+                        <div class="bg-dark rounded-circle mr-3" style="width: 40px;height: 40px"></div>
+                    </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item active">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">Home </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Profile" asp-action="Index" asp-route-userName="@User.Identity.Name">My profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="Index" asp-controller="Collection" asp-route-userName="@User.Identity.Name">My collections</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">My items</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="User" asp-action="Index">Admin panel</a>
+                        </li>
+                    }
+
+                </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <ul class="navbar-nav nav-flex-icons">
+                        <li class="nav-item align-items-center d-lg-flex d-none">
+                            <span class="mr-2">@User.Identity.Name</span>
+                        </li>
+                        <li class="nav-item">
+                            <form asp-controller="Account" asp-action="Logout">
+                                <button type="submit" class="btn btn-danger m-0" asp-controller="Account" asp-action="Logout">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="navbar-nav nav-flex-icons">
+                        <li class="nav-item align-items-center d-lg-flex d-none">
+                            <div class="btn-group">
+                                <form asp-controller="Account" method="get">
+                                    <button type="submit" class="btn btn-success m-0" asp-controller="Account" asp-action="Login">Login</button>
+                                    <button type="submit" class="btn btn-warning m-0" asp-controller="Account" asp-action="Register">Register</button>
+                                </form>
+                            </div>
+                        </li>
+
+                    </ul>
+                }
+
+            </div>
+        </nav>
+
+    </header>
+
+
+    <div class="container-fluid" id="container" style="margin-top: 70px">
+
+        @RenderBody()
+        <p id="result"></p>
+    </div>
+
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/js/mdb.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
+
+    <script src="../../../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+<script type="text/javascript">
+    function search(event) {
+        var elem = event.target;
+        var val = $(elem).val();
+        $.ajax({
+            url: "/Item/Search",
+            data: {
+                val: val
+            },
+            success: function(result){
+                var item = JSON.parse(result);  
+                for (var i = 0; i < item[0].length; i++) {
+                    console.log(item[0][i].Title);
+                }
+                
+            }
+        });
+        
+        
+        
+    }
+</script>

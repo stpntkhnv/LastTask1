@@ -1,0 +1,37 @@
+﻿@model LastTask1.ViewModels.MyCollectionsViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>MyCollections</h1>
+<h1>@Model.User.UserName</h1>
+
+<table class="table">
+    <tr>
+        <td>Name</td>
+        <td>N Items</td>
+    </tr>
+    @foreach (var collection in Model.Collections)
+    {
+        <tr>
+            <td>@collection.Title</td>
+            <td>@collection.nItems</td>
+            <td>
+                <form asp-controller="Collection" asp-action="Collection" method="post">
+                    <button type="submit" name="collectionId" value="@collection.Id" class="btn btn-outline-success">
+                        Go
+                    </button>
+                </form>
+                <a asp-controller="Collection" asp-action="Delete" asp-route-id="@collection.Id">Delete</a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<form asp-controller="Collection" asp-action="Create" method="get">
+    <button class="btn btn-outline-success" name="userName" value="@Model.User.UserName" type="submit">Create Collection</button>
+</form>
+

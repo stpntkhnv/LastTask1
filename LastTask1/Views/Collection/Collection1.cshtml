@@ -1,0 +1,32 @@
+﻿@model LastTask1.ViewModels.CollectionViewModel
+@{
+    ViewData["Title"] = "Collection1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 onclick="a()">Collection1</h1>
+
+
+
+
+
+
+
+
+<div class="container-fluid">
+    
+</div>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+    @foreach(var item in Model.Items)
+    { 
+       @: $('.container-fluid').appendTo('<div class="bg-danger border d-flex">dsds</div>');
+    }
+</script>

@@ -1,0 +1,16 @@
+﻿.item{
+    width:270px;
+    min-width:270px;
+    max-width:270px;
+    border-radius:5%;
+    background:green;
+    display:inline-flex;
+    margin: 0 15px;
+    flex-direction:column;
+
+}
+
+.item .item-item{
+    width:100%;
+
+}

@@ -1,0 +1,79 @@
+﻿@model LastTask1.ViewModels.ProfileViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <style>
+        .select-view:hover{
+				transition: 0.3s;
+				background: gray;
+				cursor: pointer;
+			}
+
+			@@media(max-width: 767px){
+				.sel-view{
+					padding: 0 !important;
+				}
+			}
+    </style>
+
+    <div class="container p-0">
+        <div class="header w-100 d-flex flex-column justify-content-end p-0" style="height: 40vh; background: url(https://img2.goodfon.ru/original/1440x900/8/e7/killzone-shadow-fall-gorod-4443.jpg); background-size: cover; ">
+
+            <div class="header-string w-100 row p-0 m-0 d-none d-md-flex" style="height: 70px;">
+
+                <img src="https://pbs.twimg.com/profile_images/926488420645523456/hwKSfqNj.jpg" class="d-md-block d-none" style="width: 140px; height: 140px; position: relative; ">
+
+                <div class="col h-100">
+                    <h1 style="margin-left: 20px">admin</h1>
+                </div>
+                <div class="col h-100 d-flex justify-content-end align-items-center">
+
+                    <button class="btn btn-warning">Edit profile</button>
+                    <button class="btn btn-danger">Delete account</button>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="w-100 d-flex flex-column align-items-center my-5 d-md-none">
+            <img src="https://pbs.twimg.com/profile_images/926488420645523456/hwKSfqNj.jpg" class="w-50 rounded-circle">
+            <p>User admin</p>
+            <div class="w-75 btn-group">
+                <button class="btn btn-warning">Edit profile</button>
+                <button class="btn btn-danger">Delete account</button>
+            </div>
+        </div>
+
+
+        <div style="height: 70px" class="">
+            <div class="d-flex row m-0 sel-view h-100" style="padding-left: 140px">
+                <div class="col-12 col-md select-view select-view-col d-flex justify-content-center align-items-center">Collections(1140)  </div>
+                <div class="col-12 col-md select-view select-view-items d-flex justify-content-center align-items-center">Items(2243)</div>
+                <div class="col-12 col-md select-view select-view-com d-flex justify-content-center align-items-center">Comments(840)</div>
+                <div class="col-12 col-md select-view select-view-likes d-flex justify-content-center align-items-center">Likes(920)</div>
+            </div>
+
+        </div>
+
+
+
+        <div class="container-fluid nt-5 block-content block-content-col">
+            <h2 class="mt-5">Collections</h2>
+
+
+
+
+        </div>
+        <div class="container-fluid nt-5 block-content block-content-items" style="display: none;">
+            <h2 class="mt-5">Items</h2>
+        </div>
+        <div class="container-fluid nt-5 block-content block-content-likes" style="display: none;">
+            <h2 class="mt-5">Likes</h2>
+        </div>
+        <div class="container-fluid nt-5 block-content block-content-com" style="display: none;">
+            <h2 class="mt-5">Comments</h2>
+        </div>
+
+    </div>

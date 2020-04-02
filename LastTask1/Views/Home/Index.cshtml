@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+@model LastTask1.ViewModels.HomeViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<h1>Items</h1>
+<table class="table">
+    <tr>
+        <td>Name</td>
+        <td>Name Collection</td>
+    </tr>
+    @foreach (var item in Model.Items)
+    {
+        <tr>
+            <td>@item.Title</td>
+            <td>@item.CollectionName</td>
+            <td>
+                <form asp-action="Item" asp-controller="Item" asp-route-itemId="@item.Id">
+                    <button asp-action="Item" asp-controller="Item" type="submit" name="itemId" value="@item.Id">Go</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+<h1>Collections</h1>
+<table class="table">
+    <tr>
+        <td>Name</td>
+        <td>nItems</td>
+    </tr>
+    @foreach (var collection in Model.Collections)
+    {
+        <tr>
+            <td>@collection.Title</td>
+            <td>@collection.nItems</td>
+        </tr>
+    }
+</table>
+
+
+
+
+

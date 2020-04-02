@@ -1,0 +1,10 @@
+﻿@model LastTask1.ViewModels.ItemViewModel
+@{
+    ViewData["Title"] = "Item";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Item @Model.Item.Title</h1>
+<form asp-action="Collection" asp-controller="Collection" method="post">
+    <button class="btn btn-outline-success" name="collectionId" value="@Model.Collection.Id">Back to list</button>
+</form>

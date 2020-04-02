@@ -1,0 +1,15 @@
+﻿@media (max-width: 780px)
+{
+    #container{
+        min-width: 100vw !important;
+        padding: 0 !important;
+    }
+    #wrapper{
+        width: 100vw !important;
+        margin: 0 !important;
+    }
+    #signup{
+        width: 60% !important; 
+        margin-top: 30px !important;
+    }
+}

@@ -1,0 +1,114 @@
+﻿@model LastTask1.ViewModels.ItemViewModel
+@{
+    ViewData["Title"] = "Item";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <style type="text/css">
+			@@media(max-width: 550px){
+				.item-img{
+					width: 98% !important;
+				}
+			}
+    </style>
+<div class="container p-0">
+    <div class="wrapper row m-0 p-0">
+        <div class="col-12 col-lg-4 sticky-top d-flex flex-column rounded h-100 align-items-center mt-3">
+            <h1>BMW S1000RR</h1>
+            <div class="item-img w-75" style="height: 55vh; background: url(https://avatars.mds.yandex.net/get-pdb/1244951/c5d7277e-6268-475a-8d6e-760d8402d75b/s1200); background-position: center;background-size: cover;"></div>
+            <p>Creater: admin</p>
+            <p>Collection: moto</p>
+            <p>Likes: 40</p>
+            <p>Comments: 120</p>
+            <div class="btn-group w-100 m-2">
+                <button class="btn btn-secondary">Back</button>
+                <button class="btn btn-warning">Edit item</button>
+                <button class="btn btn-danger">Delete item</button>
+            </div>
+        </div>
+        <div class="col border-left">
+            <h1 class="mt-2 border-bottom border-dark ">Info about item</h1>
+
+            <input type="text" name="">
+
+            <input type="text" name="">
+            <input type="text" name="">
+            <input type="text" name="">
+            <input type="text" name="">
+            <input type="text" name="">
+            <input type="text" name="">
+            @foreach (var comment in Model.Comments)
+            {
+                <div class="comment border-top border-bottom m-0 p-3 mt-5 ">
+                    <div class="h-100 d-flex">
+                        <img src="https://pbs.twimg.com/profile_images/926488420645523456/hwKSfqNj.jpg" style="width: 64px;height: 64px;">
+                        <div class="ml-3">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h3>@comment.UserName</h3>
+
+                                @if (comment.UserName == User.Identity.Name)
+                                {
+                                    <p class="commentDel">крестик</p>
+                                }
+
+                            </div>
+
+
+                            <p>
+                                @comment.Text
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
+        </div>
+    </div>
+</div>
+
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<form asp-controller="Item" asp-action="CreateComment">
+    <h4>Comments:</h4>
+    @foreach (var comment in Model.Comments)
+    {
+        @:  <p>@comment.UserName</p>
+        @:  <p>@comment.Text</p>
+    }
+    <textarea name="Text">Helo blyat</textarea>
+    <input name="itemId" value="@Model.Item.Id" style="display: none" />
+    <button type="submit" name="userName" value="@User.Identity.Name" class="btn btn-success">Create comment</button>
+</form>
+@if (Model.IsLiked)
+{
+    @: <h1>Лайкнуто, красавелло</h1>
+}
+else
+{
+    @: <h1>Не лайкнуто!!! Сука, тебе в падлу что-ли. Лайкни айтем, иначе я тебе щас сам по голове нахуй лайкну</h1>
+}
+<form asp-controller="Item" asp-action="ChangeLike">
+    <input type="text" name="userName" value="@User.Identity.Name" style="display: none" />
+    <input type="text" name="itemId" value="@Model.Item.Id" style="display:none" />
+    <button type="submit" class="btn btn-warning">Like</button>
+</form>

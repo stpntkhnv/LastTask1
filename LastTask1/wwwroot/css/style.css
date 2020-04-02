@@ -1,0 +1,264 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+
+    transition: .3s;
+}
+
+
+
+nav {
+    width: 100%;
+    height: 70px;
+    background: white;
+    border-bottom: 1px solid black;
+    display: flex;
+    align-items: center;
+}
+
+    nav .nav-item {
+        height: 40px;
+    }
+
+    nav .nav-logo {
+        width: 40px;
+        background: white;
+        margin: 0 15px;
+    }
+
+    nav .nav-search {
+        flex: 1;
+        display: flex;
+        background: green;
+    }
+
+        nav .nav-search button {
+            width: 100px;
+            height: 100%;
+        }
+
+        nav .nav-search input {
+            flex: 1;
+            height: 100%;
+        }
+
+    nav .nav-home {
+        width: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+
+
+    nav .user-info {
+        display: flex;
+        align-items: center;
+        margin-right: 50px;
+    }
+
+        nav .user-info img {
+            border-radius: 50%;
+        }
+
+    nav .user-info {
+        text-decoration: none;
+    }
+
+a:visited {
+    color: black;
+}
+
+
+
+
+
+.menu__box .user-info {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+    .menu__box .user-info img {
+        margin: 0;
+        padding: 0;
+    }
+
+    .menu__box .user-info .user-email {
+        margin: 0;
+        padding: 0;
+    }
+
+.menu__item {
+    display: flex;
+    align-items: center;
+}
+
+
+.menu__box li .user-info {
+    padding: 0;
+    height: 50px;
+    display: none;
+}
+
+.hamburger-background {
+    width: 50px;
+    height: 100%;
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* скрываем чекбокс */
+#menu__toggle {
+    opacity: 0;
+}
+/* стилизуем кнопку */
+.menu__btn {
+    display: flex; /* используем flex для центрирования содержимого */
+    align-items: center; /* центрируем содержимое кнопки */
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    z-index: 1;
+}
+    /* добавляем "гамбургер" */
+    .menu__btn > span,
+    .menu__btn > span::before,
+    .menu__btn > span::after {
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background-color: #616161;
+    }
+
+        .menu__btn > span::before {
+            content: '';
+            top: -8px;
+        }
+
+        .menu__btn > span::after {
+            content: '';
+            top: 8px;
+        }
+
+/* контейнер меню */
+.menu__box {
+    display: block;
+    position: fixed;
+    visibility: hidden;
+    top: 70px;
+    right: -100%;
+    width: 300px;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+    background-color: white;
+    box-shadow: 1px 0px 6px rgba(0, 0, 0, .2);
+}
+/* элементы меню */
+.menu__item {
+    display: block;
+    padding: 12px 24px;
+    color: #333;
+    text-decoration: none;
+}
+
+    .menu__item:hover {
+        background-color: #CFD8DC;
+    }
+
+
+
+#menu__toggle:checked ~ .menu__btn > span {
+    transform: rotate(45deg);
+}
+
+    #menu__toggle:checked ~ .menu__btn > span::before {
+        top: 0;
+        transform: rotate(0);
+    }
+
+    #menu__toggle:checked ~ .menu__btn > span::after {
+        top: 0;
+        transform: rotate(90deg);
+    }
+
+#menu__toggle:checked ~ .menu__box {
+    visibility: visible;
+    right: 0;
+}
+
+
+.menu__btn > span,
+.menu__btn > span::before,
+.menu__btn > span::after {
+    transition-duration: .25s;
+}
+
+.menu__box {
+    transition-duration: .25s;
+}
+
+.menu__item {
+    transition-duration: .25s;
+}
+
+@media all and (max-width: 768px) {
+
+    nav .nav-search button {
+        width: 43px;
+        height: 100%;
+    }
+
+    .hamburger-background {
+        display: block;
+    }
+
+    .menu__box {
+        position: fixed;
+        width: 100%;
+        box-shadow: none;
+        border-bottom: 1px black solid;
+    }
+
+        .menu__box li .user-info {
+            display: flex;
+        }
+
+    nav .user-info {
+        display: none;
+    }
+
+    nav .nav-home {
+        display: none;
+    }
+}
