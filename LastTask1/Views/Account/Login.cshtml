@@ -4,12 +4,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link href="~/css/LoginRegister.css" rel="stylesheet" />
-<form class="h-100" style="height: 100vh" method="post">
 
-    <div id="wrapper" class="wrapper bg-white d-flex flex-column align-items-center justify-content-start h-75 w-75" style="margin: 12.5%; margin-top: 50px; box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
-													  -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
-													  -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);">
+
+    <style>
+        @@media (max-width: 570px) {
+            .container-fluid {
+                padding: 0 !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+
+            #size, #size1 {
+                width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+        }
+    </style>
+<link href="~/css/LoginRegister.css" rel="stylesheet" />
+
+<div id="size1" class="container d-flex justify-content-center">
+    <form id="size" class="w-75 shadow bg-white d-flex flex-column align-items-center">
         <h1 class="mt-5 text-center">Login</h1>
         <div class="md-form w-75 mt-0">
             <i class="fas fa-user prefix"></i>
@@ -25,10 +40,11 @@
             <input asp-for="RememberMe" type="checkbox" class="custom-control-input" id="customControlAutosizing">
             <label class="custom-control-label" for="customControlAutosizing">Remember me</label>
         </div>
-        
+
 
         <div asp-validation-summary="ModelOnly" class="note note-danger"></div>
         <input id="signup" type="submit" asp-controller="Account" asp-action="Login" class="btn btn-success btn-rounded w-25 mb-5 mt-5" value="Login" />
-    </div>
-</form>
+    </form>
+</div>
+
 

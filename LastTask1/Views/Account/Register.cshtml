@@ -3,32 +3,45 @@
     ViewData["Title"] = "Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<style>
+    @@media (max-width: 570px)
+    {
+        .container-fluid{
+            padding: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+        #size, #size1{
+            width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+   
+    }
+</style>
 <link href="~/css/LoginRegister.css" rel="stylesheet" />
-<form class="h-100" style="height: 100vh" method="post">
-    
-    <div id="wrapper" class="wrapper bg-white d-flex flex-column align-items-center justify-content-start h-75 w-75" style="margin: 12.5%; margin-top: 50px; y">
+<div id="size1" class="container d-flex justify-content-center">
+    <form id="size" class="w-75 shadow bg-white d-flex flex-column align-items-center">
         <h1 class="mt-5 text-center">Register new account</h1>
         <div class="md-form mb-0 w-75">
             <i class="fas fa-envelope prefix"></i>
             <input asp-for="Email" required type="email" id="inputValidationEx" class="form-control validate" placeholder="Input your e-mail">
-            <span asp-validation-for="Email" ></span>
+            <span asp-validation-for="Email"></span>
         </div>
-        <div class="md-form w-75 mt-0">
+        <div class="md-form mt-3 w-75">
             <i class="fas fa-user prefix"></i>
             <input name="userName" type="text" id="inputIconEx2" class="form-control" placeholder="Type your username">
         </div>
-        <div class="md-form w-75">
+        <div class="md-form mb-0 w-75">
             <i class="fas fa-lock prefix"></i>
             <input asp-for="Password" required type="password" id="inputValidationEx2" class="form-control validate" placeholder="Type your password">
-            <span asp-validation-for="Password" ></span>
+            <span asp-validation-for="Password"></span>
         </div>
-        <div class="md-form w-75">
+        <div class="md-form mt-2 w-75">
             <i class="fas fa-lock prefix"></i>
             <input asp-for="PasswordConfirm" required type="password" id="inputValidationEx2" class="form-control validate" placeholder="ConfirmPassword">
-            <span asp-validation-for="PasswordConfirm" ></span>
+            <span asp-validation-for="PasswordConfirm"></span>
         </div>
-        <div asp-validation-summary="ModelOnly" class="note note-danger"></div>
-        <input id="signup" type="submit" asp-controller="Account" asp-action="Register" class="btn btn-success btn-rounded w-25" value="Register" />
-    </div>
-</form>
+        <input id="signup" type="submit" asp-controller="Account" asp-action="Register" class="btn btn-success btn-rounded" value="Register" />
+    </form>
+</div>
