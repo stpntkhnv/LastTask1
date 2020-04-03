@@ -11,6 +11,8 @@ namespace LastTask1.ViewModels
         public User User { get; set; }
         public List<Collection> Collections { get; set; }
         public List<Item> Items { get; set;}
+        public List<Item> Likes { get; set; }
+        public List<Item> Comments { get; set; }
 
     } 
 }
