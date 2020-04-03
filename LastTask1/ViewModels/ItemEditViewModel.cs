@@ -32,6 +32,6 @@ namespace LastTask1.ViewModels
 
         public Item Item { get; set; }
 
-        public Dictionary<string, string[]> Fields { get; set; }
+        public Dictionary<string, string> Fields { get; set; }
     }
 }

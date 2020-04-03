@@ -1,5 +1,6 @@
 ﻿@model LastTask1.ViewModels.CollectionViewModel
 @using System.Text.Json;
+@using Newtonsoft.Json;
 @using System.Text;
 @{
     ViewData["Title"] = "Collection";
@@ -50,35 +51,46 @@
         <div class="grid container-fluid m-0 p-0">
             <div class="row">
                 @foreach (var item in Model.Items)
-                {
-                    var ItemFields = JsonSerializer.Deserialize<Dictionary<string, string>>(item.OptionalFields);
-                    @:<div class=" item col-xl-4 col-md-6 col-12 mt-3 mx-0" id="card">
-                        <div class="card w-100 bg-white d-inline-flex flex-column align-items-center justify-content-between" style="box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
-                                                                              -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
-                                                                              -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);">
-                            <img src="@item.ImageUrl" class="w-100">
-                            <p class="h3-responsive name">@item.Title</p>
-                            <p class="p-3" style="max-height: 20.5em; overflow: hidden;">
-                                @item.Description
-                            </p>
-                            @foreach (var str in ItemFields)
-                            {
-                                @: <p class="@str.Key.Replace(" ", "")">@str.Key : @str.Value</p>
-                            }
-                            <div class="btn-group w-100 d-flex justify-content-center">
-                                <form asp-controller="Item" asp-action="Item" class="w-100 d-flex justify-content-center h-100">
-                                    <div class="btn-group w-100">
-                                        <button type="submit" name="itemId" value="@item.Id" class="btn btn-success p-0 pt-2 pb-2">View</button>
-                                        <button type="submit" name="itemId" value="@item.Id" asp-controller="Item" asp-action="Edit" class="btn btn-warning p-0 pt-2 pb-2">Edit</button>
-                                        <button type="submit" name="itemId" value="@item.Id" asp-controller="Item" asp-action="Delete" class="btn btn-danger p-0 pt-2 pb-2">Delete</button>
-                                    </div>
-                                </form>
+        {               
+            var ItemFields = JsonConvert.DeserializeObject<Dictionary<string, string>>(item.OptionalFields);
+            @:<div class=" item col-xl-4 col-md-6 col-12 mt-3 mx-0" id="card">
+                  <div class="card w-100 bg-white d-inline-flex flex-column align-items-center justify-content-between" style="box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
+                                                                      -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
+                                                                      -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);">
+                      <img src="@item.ImageUrl" class="w-100">
+                      <p class="h3-responsive name">@item.Title</p>
 
-                            </div>
-                        </div>
-                    @:</div>
-                }
+
+
+                      @foreach (var val in ItemFields)
+                      {
+                          string[] s = val.Value.Split("$$$$$");
+                          @: <p class="@val.Key.Replace(" ","") text-center mx-2">@val.Key : @s[1]</p>
+                      }
+                      <p class="p-3" style="max-height: 20.5em; overflow: hidden;">
+                          @item.Description
+                      </p>
+
+
+                      <div class="btn-group w-100 d-flex justify-content-center">
+                          <form asp-controller="Item" asp-action="Item" class="w-100 d-flex justify-content-center h-100">
+                              <div class="btn-group w-100">
+                                  <button type="submit" name="itemId" value="@item.Id" class="btn btn-success p-0 pt-2 pb-2">View</button>
+                                  <button type="submit" name="itemId" value="@item.Id" asp-controller="Item" asp-action="Edit" class="btn btn-warning p-0 pt-2 pb-2">Edit</button>
+                                  <button type="submit" name="itemId" value="@item.Id" asp-controller="Item" asp-action="Delete" class="btn btn-danger p-0 pt-2 pb-2">Delete</button>
+                              </div>
+                          </form>
+
+                      </div>
+                  </div>
+            @:</div>
+                          }
+
                 
+
+
+                
+
             </div>
 
         </div>

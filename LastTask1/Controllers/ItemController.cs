@@ -9,6 +9,7 @@ using LastTask1.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace LastTask1.Controllers
 {
@@ -131,6 +132,7 @@ namespace LastTask1.Controllers
                 if (comment.ItemId == itemId)
                     UserComments.Add(comment);
             }
+           
             ItemViewModel model = new ItemViewModel()
             {
                 Item = item,
@@ -161,7 +163,7 @@ namespace LastTask1.Controllers
             ItemCreateViewModel model = new ItemCreateViewModel
             {
                 Collection = collection,
-                Fields = JsonSerializer.Deserialize<Dictionary<string, string[]>>(collection.Fields)
+                Fields = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(collection.Fields)
 
             };
             return View(model);
@@ -183,9 +185,9 @@ namespace LastTask1.Controllers
             //    }
             //}
 
-            string result = "[" + JsonSerializer.Serialize(Items) + ","+
-                JsonSerializer.Serialize(Collections)+","+
-                JsonSerializer.Serialize(Comments)+
+            string result = "[" + JsonConvert.SerializeObject(Items) + ","+
+                JsonConvert.SerializeObject(Collections) + ","+
+                JsonConvert.SerializeObject(Comments) +
 
                 "]";
             return Json(result);
@@ -199,16 +201,34 @@ namespace LastTask1.Controllers
                 .Where(o => o.Id == collectionId)
                 .FirstOrDefault();
             User user = await _userManager.FindByNameAsync(collection.UserName);
-            Dictionary<string, string[]> CollectionFields = JsonSerializer.Deserialize<Dictionary<string, string[]>>(collection.Fields);
+            Dictionary<string, string[]> CollectionFields = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(collection.Fields);
             Dictionary<string, string> ItemFields = new Dictionary<string, string>();
-            foreach(var str in CollectionFields)
+
+            foreach (var colStr in CollectionFields)
             {
-                foreach(var name in str.Value)
+                string type = colStr.Key;
+                foreach (var colName in colStr.Value)
                 {
-                    var val = Request.Form[name];
-                    ItemFields.Add(name, val);
+                    string name = colName;
+                    string value = Request.Form[name];
+                    if (value == "" || value == null)
+                        value = "off";
+                    string s = type + "$$$$$" + value;
+                    ItemFields.Add(name, s);
                 }
+      
+                
+                
             }
+
+            //foreach(var str in CollectionFields)
+            //{
+            //    foreach(var name in str.Value)
+            //    {
+            //        var val = Request.Form[name];
+            //        ItemFields.Add(name, val);
+            //    }
+            //}
             Item item = new Item
             {
                 Id = Guid.NewGuid().ToString(),
@@ -220,7 +240,7 @@ namespace LastTask1.Controllers
                 Tags = Tags,
                 CollectionName = collection.Title,
                 ImageUrl = ImageUrl,
-                OptionalFields = JsonSerializer.Serialize(ItemFields)              
+                OptionalFields = JsonConvert.SerializeObject(ItemFields)              
             };
             _itemContext.Add(item);
             collection.nItems++;
@@ -232,10 +252,10 @@ namespace LastTask1.Controllers
             return RedirectToAction("Collection", "Collection", new { collectionId = collection.Id });
         }
 
-        public async Task<ActionResult> Delete(string id)
+        public async Task<ActionResult> Delete(string itemId)
         {
             Item item = _itemContext.Items
-                .Where(o => o.Id == id)
+                .Where(o => o.Id == itemId)
                 .FirstOrDefault();
             _itemContext.Items.Remove(item);
             Collection collection = _collectionContext.Collections
@@ -252,7 +272,7 @@ namespace LastTask1.Controllers
                             .Where(o => o.Id == collectionId)
                             .FirstOrDefault();
             User user = await _userManager.FindByNameAsync(collection.UserName);
-            Dictionary<string, string[]> CollectionFields = JsonSerializer.Deserialize<Dictionary<string, string[]>>(collection.Fields);
+            Dictionary<string, string[]> CollectionFields = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(collection.Fields);
             Dictionary<string, string> ItemFields = new Dictionary<string, string>();
             foreach (var str in CollectionFields)
             {
@@ -272,7 +292,7 @@ namespace LastTask1.Controllers
             item.Tags = Tags;
             item.CollectionName = collection.Title;
             item.ImageUrl = ImageUrl;
-            item.OptionalFields = JsonSerializer.Serialize(ItemFields);
+            item.OptionalFields = JsonConvert.SerializeObject(ItemFields);
             await _itemContext.SaveChangesAsync();
             return RedirectToAction("Item", "Item", new { itemId = item.Id });
         }
@@ -285,7 +305,7 @@ namespace LastTask1.Controllers
             ItemEditViewModel model = new ItemEditViewModel
             {
                 Collection = collection,
-                Fields = JsonSerializer.Deserialize<Dictionary<string, string[]>>(collection.Fields),
+                Fields = JsonConvert.DeserializeObject<Dictionary<string, string>>(collection.Fields),
                 Item = item
 
             };
