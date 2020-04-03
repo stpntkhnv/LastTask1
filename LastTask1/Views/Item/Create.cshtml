@@ -4,7 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" href="~/css/ItemCreate.css" />
-<script type="text/javascript" src="~/js/ItemCreate.js"></script>
 
 
 
@@ -20,7 +19,7 @@
                     <div class="w-100 h-100">
                         <input required type="file" class="w-100 h-100" style="opacity: 0; cursor:pointer;" onchange="upload(this.files[0])" name="">
                     </div>
-                        <div class="image-small"></div>
+                    <div class="image-small"></div>
                     <p style="position: absolute; font-size: 20px; font-style: italic" class="w-75 hide">Please, drag your image here</p>
                 </div>
                 <p class="hide">Collection: animals</p>
@@ -59,36 +58,36 @@
                             case "int":
                                 foreach (var val in str.Value)
                                 {
-            <div class="form-group  m-5" style="margin-left: 0%;">
-                <label for="exampleFormControlInput1">@val</label>
-                <input type="number" class="form-control" id="Int" name="@val" style="flex: 1;">
-            </div>
+                                    <div class="form-group  m-5" style="margin-left: 0%;">
+                                        <label for="exampleFormControlInput1">@val</label>
+                                        <input type="number" class="form-control" id="Int" name="@val" style="flex: 1;">
+                                    </div>
                                 }
                                 break;
                             case "bool":
                                 foreach (var val in str.Value)
                                 {
-            <div class="custom-control md-form form-lg m-5 w-75 d-flex  mr-sm-2" style="margin-left: 12.5%;">
-                <input type="checkbox" id="Bool" name="@val"  style="margin-left: 20px">
-                <label>@val</label>
-            </div>
+                                    <div class="custom-control md-form form-lg m-5 w-75 d-flex  mr-sm-2" style="margin-left: 12.5%;">
+                                        <input type="checkbox" id="Bool" name="@val" style="margin-left: 20px">
+                                        <label>@val</label>
+                                    </div>
                                 }
                                 break;
                             case "date":
                                 foreach (var val in str.Value)
                                 {
-            <div class="md-form form-lg m-5 d-flex" style="margin-left: 12.5%;">
-                <input type="date" id="Date" name="@val" class="form-control" mdbInput >
-                <label for="input">@val</label>
-            </div>
+                                    <div class="md-form form-lg m-5 d-flex" style="margin-left: 12.5%;">
+                                        <input type="date" id="Date" name="@val" class="form-control" mdbInput>
+                                        <label for="input">@val</label>
+                                    </div>
                                 }
                                 break;
                             case "str":
                                 foreach (var val in str.Value)
                                 {
-            <div class="md-form form-lg m-5">
-                <input type="text" id="Str" class="form-control form-control-lg" name="@val" placeholder="@val">
-            </div>
+                                    <div class="md-form form-lg m-5">
+                                        <input type="text" id="Str" class="form-control form-control-lg" name="@val" placeholder="@val">
+                                    </div>
                                 }
                                 break;
                         }
@@ -99,19 +98,19 @@
 
 
                 @*<div class="form-group green-border-focus m-5">
-                    <label for="exampleFormControlTextarea5">Name of area</label>
-                    <textarea required class="form-control" id="exampleFormControlTextarea5" rows="3" style="height: 8em; resize: none;"></textarea>
-                </div>*@
-
-                
-
-                
+                        <label for="exampleFormControlTextarea5">Name of area</label>
+                        <textarea required class="form-control" id="exampleFormControlTextarea5" rows="3" style="height: 8em; resize: none;"></textarea>
+                    </div>*@
 
 
-                
 
 
-                
+
+
+
+
+
+
 
                 <div class="btn-group w-75 mt-2 mb-3" style="margin-left: 12.5%;">
                     <a asp-controller="Collection" asp-action="Collection" asp-route-collectionId="@Model.Collection.Id" class="btn btn-dark">Back</a>
@@ -125,3 +124,39 @@
 
     </form>
 </div>
+<script type="text/javascript" src="~/js/ImageUpload.js"></script>
+@*<script type="text/javascript">
+    function upload(file) {
+	if (!file || !file.type.match(/image.*/)) return;
+	var fd = new FormData();
+	fd.append("image", file);
+	fd.append("title", "pashapidor");
+	fd.append("client_secret", "08f15a0f06dcdc42252b5edf1caa234889f3617e");
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "https://api.imgur.com/3/image");
+	xhr.setRequestHeader('Authorization', 'Client-ID e75c1034c633a9f');
+	xhr.onload = function () {
+	var link = 'url(' + (JSON.parse(xhr.responseText).data.link) + ')';
+
+	$("#imgur_link").val(JSON.parse(xhr.responseText).data.link);
+
+	$('#drag').find('p').css('display', 'none');
+	$('#drag').css('background', link);
+	$('#drag').css('background-size', 'cover');
+	$('#drag').css('background-position', 'center');
+	$('#drag').css('height', '400px !important');
+
+	$('.image-small').css('height', '400px');
+	$('.image-small').css('width', '75%');
+	$('.image-small').css('border-radius', '5%');
+	$('.image-small').css('background', link);
+	$('.image-small').css('background-size', 'cover');
+	$('.image-small').css('background-position', 'center');
+
+
+		alert("Ваше фото успешно загружено");
+	}
+	xhr.send(fd);
+}
+</script>*@
