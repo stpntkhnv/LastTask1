@@ -9,26 +9,7 @@ namespace LastTask1.ViewModels
 {
     public class ItemEditViewModel
     {
-        public Collection Collection { get; set; }
-        [Required]
-        [Display(Name = "Title")]
-        public string Title { get; set; }
-
-        [Required]
-        [Display(Name = "Description")]
-        public string Description { get; set; }
-
-        [Required]
-        [Display(Name = "ShortDescription")]
-        public string ShortDescription { get; set; }
-
-        [Required]
-        [Display(Name = "Tags")]
-        public string Tags { get; set; }
-
-
-        [Display(Name = "Image")]
-        public string ImageUrl { get; set; }
+        public User UserNow { get; set; }
 
         public Item Item { get; set; }
 

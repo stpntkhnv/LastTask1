@@ -174,17 +174,6 @@ namespace LastTask1.Controllers
             List<Item> Items = _itemContext.Items.Where(o => o.Title.Contains(val) || o.Description.Contains(val) || o.Tags.Contains(val)).ToList();
             List<Comment> Comments = _commentContext.Comments.Where(o => o.Text.Contains(val)).ToList();           
             List<Collection> Collections = _collectionContext.Collections.Where(o => o.Title.Contains(val) || o.Description.Contains(val)).ToList(); 
-            //foreach(var collection in Collections)
-            //{
-            //    foreach(var item in _itemContext.Items.ToList())
-            //    {
-            //        if (item.CollectionId == collection.Id)
-            //        {
-            //            Items.Add(item);
-            //        }
-            //    }
-            //}
-
             string result = "[" + JsonConvert.SerializeObject(Items) + ","+
                 JsonConvert.SerializeObject(Collections) + ","+
                 JsonConvert.SerializeObject(Comments) +
@@ -255,50 +244,53 @@ namespace LastTask1.Controllers
             await _itemContext.SaveChangesAsync();
             return RedirectToAction("Index", "Item", new { id = collection.Id });
         }
-        public async Task<IActionResult> ItemEdit(string collectionId, string Title, string Description, string ShortDescription, string exitionalString, string Tags, bool goToNew, string ImageUrl, string itemId)
+
+        public async Task<IActionResult> Edit(string itemId)
         {
-            Collection collection = _collectionContext.Collections
-                            .Where(o => o.Id == collectionId)
-                            .FirstOrDefault();
-            User user = await _userManager.FindByNameAsync(collection.UserName);
-            Dictionary<string, string[]> CollectionFields = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(collection.Fields);
-            Dictionary<string, string> ItemFields = new Dictionary<string, string>();
-            foreach (var str in CollectionFields)
-            {
-                foreach (var name in str.Value)
-                {
-                    var val = Request.Form[name];
-                    ItemFields.Add(name, val);
-                }
-            }
             Item item = _itemContext.Items.Where(o => o.Id == itemId).SingleOrDefault();
-            item.Id = Guid.NewGuid().ToString();
-            item.CollectionId = collectionId;
-            item.UserName = collection.UserName;
-            item.Title = Title;
-            item.Description = Description;
-            item.ShortDescription = ShortDescription;
-            item.Tags = Tags;
-            item.CollectionName = collection.Title;
-            item.ImageUrl = ImageUrl;
-            item.OptionalFields = JsonConvert.SerializeObject(ItemFields);
-            await _itemContext.SaveChangesAsync();
-            return RedirectToAction("Item", "Item", new { itemId = item.Id });
+            User UserNow = await _userManager.FindByNameAsync(item.UserName);
+            ItemEditViewModel model = new ItemEditViewModel()
+            {
+                UserNow = UserNow,
+                Item = item,
+                Fields = JsonConvert.DeserializeObject<Dictionary<string, string>>(item.OptionalFields)
+            };
+            return View(model);
         }
-        public IActionResult Edit(string itemId)
+
+        public async Task<IActionResult> ItemEdit(string itemId, string ImageUrl, string Description, string Tags, string Title)
         {
             Item item = _itemContext.Items.Where(o => o.Id == itemId).SingleOrDefault();
             Collection collection = _collectionContext.Collections
                 .Where(o => o.Id == item.CollectionId)
                 .FirstOrDefault();
-            ItemEditViewModel model = new ItemEditViewModel
-            {
-                Collection = collection,
-                Fields = JsonConvert.DeserializeObject<Dictionary<string, string>>(collection.Fields),
-                Item = item
+            User user = await _userManager.FindByNameAsync(collection.UserName);
+            Dictionary<string, string[]> CollectionFields = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(collection.Fields);
+            Dictionary<string, string> ItemFields = new Dictionary<string, string>();
 
-            };
-            return View(model);
+            foreach (var colStr in CollectionFields)
+            {
+                string type = colStr.Key;
+                foreach (var colName in colStr.Value)
+                {
+                    string name = colName;
+                    string value = Request.Form[name];
+                    if (value == "" || value == null)
+                        value = "off";
+                    string s = type + "$$$$$" + value;
+                    ItemFields.Add(name, s);
+                }
+            }
+
+            item.OptionalFields = JsonConvert.SerializeObject(ItemFields);
+            item.Title = Title;
+            item.Description = Description;
+            item.Tags = Tags;
+            item.ImageUrl = ImageUrl;
+
+            await _itemContext.SaveChangesAsync();
+
+            return RedirectToAction("Item", "Item", new { itemId = itemId });
         }
 
     }
