@@ -215,20 +215,9 @@ namespace LastTask1.Controllers
                         value = "off";
                     string s = type + "$$$$$" + value;
                     ItemFields.Add(name, s);
-                }
-      
-                
-                
+                }                                   
             }
 
-            //foreach(var str in CollectionFields)
-            //{
-            //    foreach(var name in str.Value)
-            //    {
-            //        var val = Request.Form[name];
-            //        ItemFields.Add(name, val);
-            //    }
-            //}
             Item item = new Item
             {
                 Id = Guid.NewGuid().ToString(),

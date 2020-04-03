@@ -116,6 +116,11 @@ namespace LastTask1.Controllers
             string[] strings = Request.Form["Str"];
             string[] dates = Request.Form["Date"];
             string[] booles = Request.Form["Bool"];
+            for(int i = 0; i < booles.Length; i++)
+            {
+                if (booles[i] == "$$$$$")
+                    booles[i] = "Incorrect name";
+            }
             Dictionary<string, string[]> dictionary = new Dictionary<string, string[]>
             {
                 ["int"] = integers,
