@@ -10,7 +10,7 @@
 				}
 			}
     </style>
-<div class="container p-0">
+<div class="container p-0 shadow bg-white">
     <div class="wrapper row m-0 p-0">
         <div class="col-12 col-lg-4 sticky-top d-flex flex-column rounded h-100 align-items-center mt-3">
             <h1>BMW S1000RR</h1>
@@ -20,28 +20,19 @@
             <p>Likes: 40</p>
             <p>Comments: 120</p>
             <div class="btn-group w-100 m-2">
-                <button class="btn btn-secondary">Back</button>
-                <button class="btn btn-warning">Edit item</button>
-                <button class="btn btn-danger">Delete item</button>
+                <button class="btn btn-secondary py-2 px-3">Back</button>
+                <button class="btn btn-warning py-2 px-3">Edit item</button>
+                <button class="btn btn-danger py-2 px-3">Delete item</button>
             </div>
         </div>
         <div class="col border-left">
             <h1 class="mt-2 border-bottom border-dark ">Info about item</h1>
-
-            <input type="text" name="">
-
-            <input type="text" name="">
-            <input type="text" name="">
-            <input type="text" name="">
-            <input type="text" name="">
-            <input type="text" name="">
-            <input type="text" name="">
             @foreach (var comment in Model.Comments)
             {
                 <div class="comment border-top border-bottom m-0 p-3 mt-5 ">
                     <div class="h-100 d-flex">
                         <img src="https://pbs.twimg.com/profile_images/926488420645523456/hwKSfqNj.jpg" style="width: 64px;height: 64px;">
-                        <div class="ml-3">
+                        <div class="ml-3 w-100">
                             <div class="d-flex w-100 justify-content-between">
                                 <h3>@comment.UserName</h3>
 
@@ -67,8 +58,6 @@
         </div>
     </div>
 </div>
-
-		</div>
 
 
 

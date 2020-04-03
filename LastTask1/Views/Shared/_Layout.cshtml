@@ -17,11 +17,11 @@
     @RenderSection("styles", required: false)
 </head>
 
-<body>
+<body style="background: #c0eb75">
     <!--Main Navigation-->
     <header>
 
-        <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light d-flex scrolling-navbar">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark  d-flex scrolling-navbar" style="background: #343a40;">
             <a class="navbar-brand" href="#"><strong>Itransition</strong></a>
 
             <!-- Search form -->
@@ -65,7 +65,7 @@
                 {
                     <ul class="navbar-nav nav-flex-icons">
                         <li class="nav-item align-items-center d-lg-flex d-none">
-                            <span class="mr-2">@User.Identity.Name</span>
+                            <span class="mr-2 text-white" style="color: white !important;">@User.Identity.Name</span>
                         </li>
                         <li class="nav-item">
                             <form asp-controller="Account" asp-action="Logout">
@@ -95,7 +95,7 @@
     </header>
 
 
-    <div class="container-fluid" id="container" style="margin-top: 70px">
+    <div class="container-fluid" id="container" style="margin-top: 70px;">
 
         @RenderBody()
         <p id="result"></p>

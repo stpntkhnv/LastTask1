@@ -15,17 +15,21 @@
 <div class="wrapper row bg-white m-0 p-0 w-100" id="wrap" style="box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
 													  -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
 													  -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);">
-    <div class="col-lg-4 h-100 border-right border-3">
+    <div class="col-lg-4 h-100 border-right border-3 d-flex flex-column align-items-center">
         <h1 class="text-center m-5">Collection @Model.Collection.Title</h1>
         <img src="@Model.Collection.Img" class="w-100">
         <p class="h4-responsive pt-3">Theme: @Model.Collection.Theme</p>
         <p class="h4-responsive">Items: @Model.Collection.nItems</p>
         <p class="h4-responsive">Creater: @Model.User.UserName</p>
         <p class="h4-responsive mt-5">Description:</p>
-        <p class="">@Model.Collection.Description</p>
-        <div class="btn btn-warning w-50 mb-5 mt-5" style="margin-left: 25%">
-            Edit collection
-        </div>
+        <p class="">@Model.Collection.Description</p>   
+            <form class="d-flex w-100 justify-content-center">
+                <div class="btn-group w-75">
+                    <button name="collectionId" asp-controller="Collection" asp-action="Create" value="@Model.Collection.Id" type="submit" class="btn btn-warning">Edit collection</button>
+                    <button name="collectionId" asp-controller="Item" asp-action="Create" value="@Model.Collection.Id" type="submit" class="btn btn-success">Create item</button>
+                </div>
+                
+            </form>
     </div>
     <div class="col d-flex flex-column align-items-center " id="cont">
         <p class="h3-responsive m-5 text-center">Items in collection</p>
@@ -61,25 +65,27 @@
                             {
                                 @: <p class="@str.Key.Replace(" ", "")">@str.Key : @str.Value</p>
                             }
-                            <div class="btn-group w-100">
-                                <form asp-controller="Item" asp-action="Item" class="w-100 h-100">
-                                    <button type="submit" name="itemId" value="@item.Id" class="btn btn-success w-25 p-0 pt-2 pb-2">View</button>
-                                    <button type="submit" name="itemId" value="@item.Id" asp-controller="Item" asp-action="Edit" class="btn btn-warning w-25 p-0 pt-2 pb-2">Edit</button>
-                                    <button type="submit" name="itemId" value="@item.Id" class="btn btn-danger w-25 p-0 pt-2 pb-2">Delete</button>
+                            <div class="btn-group w-100 d-flex justify-content-center">
+                                <form asp-controller="Item" asp-action="Item" class="w-100 d-flex justify-content-center h-100">
+                                    <div class="btn-group w-100">
+                                        <button type="submit" name="itemId" value="@item.Id" class="btn btn-success p-0 pt-2 pb-2">View</button>
+                                        <button type="submit" name="itemId" value="@item.Id" asp-controller="Item" asp-action="Edit" class="btn btn-warning p-0 pt-2 pb-2">Edit</button>
+                                        <button type="submit" name="itemId" value="@item.Id" asp-controller="Item" asp-action="Delete" class="btn btn-danger p-0 pt-2 pb-2">Delete</button>
+                                    </div>
                                 </form>
-                                
+
                             </div>
                         </div>
                     @:</div>
                 }
+                
             </div>
+
         </div>
 
 
     </div><!-- /.container -->
-    <form>
-        <button name="collectionId" asp-controller="Item" asp-action="Create" value="@Model.Collection.Id" type="submit" class="btn btn-black">Xyu</button>
-    </form>
+    
 </div>
 
 

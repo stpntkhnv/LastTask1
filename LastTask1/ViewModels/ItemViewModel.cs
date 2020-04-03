@@ -13,5 +13,6 @@ namespace LastTask1.ViewModels
         public Item Item { get; set; }
         public List<Comment> Comments { get; set; }
         public bool IsLiked { get; set; }
+        //public Dictionary<string, string[]> OptionalString { get; set; }
     }
 }
