@@ -8,8 +8,8 @@ namespace LastTask1.Models
 {
     public class User : IdentityUser
     {
+        
         public int nItems { get; set; }
-
-
+        public string Role { get; set; }
     }
 }

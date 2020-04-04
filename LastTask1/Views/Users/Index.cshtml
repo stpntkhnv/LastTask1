@@ -4,4 +4,66 @@
 }
 
 
-<h2>Список пользователей</h2>
+    <div class="container">
+        <table id="dtMaterialDesignExample" class="table table-striped" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="th-sm">
+                        Id
+                    </th>
+                    <th class="th-sm">
+                        UserName
+                    </th>
+                    <th class="th-sm">
+                        Role
+                    </th>                   
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.Users)
+                {
+                <tr>
+                    <th class="th-sm">
+                        @user.Id
+                    </th>
+                    <th class="th-sm">
+                        @user.UserName
+                    </th>
+
+                    <th class="th-sm">
+                        <p class="font-weight-bold">@user.Role</p>
+                        @if (Model.User.Role == "admin")
+                        {
+                            @if (user.Role == "user")
+                            {
+                                @: <a onclick="changeRole(event.targer)">Set admin</a>
+                            }
+                            else
+                            {
+                                @: <a onclick="changeRole(event.target)" id="@User.Identity.Name">Set user</a>
+                            }
+
+                        }
+
+
+                    </th>
+                </tr>
+                }
+
+            </tbody>
+            </table>
+    </div>
+
+
+    <script type="text/javascript">
+        
+        function changeRole(e) {
+            alert($(e).att('id'));
+            $.ajax({
+            url: "/Users/ChangeRole",
+            data: {
+                role: e
+            }
+        });
+        }
+    </script>

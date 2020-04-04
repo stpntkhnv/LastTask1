@@ -10,6 +10,5 @@ namespace LastTask1.ViewModels
     {
         public List<Item> Items { get; set; }
         public List<Collection> Collections { get; set; }
-        
     }
 }

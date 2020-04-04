@@ -9,7 +9,6 @@
 
 
 
-<link href="~/css/Collection.css" rel="stylesheet" />
 <div class="container-fluid row bg-white m-0 p-0 w-100 shadow" id="wrap" style="box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
 													  -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
 													  -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);">
@@ -22,7 +21,7 @@
         <p class="h4-responsive mt-5">Description:</p>
         <p class="">@Model.Collection.Description</p>   
             <form class="d-flex w-100 justify-content-center">
-                <div class="btn-group w-75">
+                <div class="btn-group w-75 rounded">
                     <button name="collectionId" asp-controller="Collection" asp-action="Create" value="@Model.Collection.Id" type="submit" class="btn btn-warning">Edit collection</button>
                     <button name="collectionId" asp-controller="Item" asp-action="Create" value="@Model.Collection.Id" type="submit" class="btn btn-success">Create item</button>
                 </div>
@@ -71,11 +70,10 @@
 
                       <div class="btn-group w-100 d-flex justify-content-center">
                           <form asp-controller="Item" asp-action="Item" class="w-100 d-flex justify-content-center h-100">
-                              <div class="btn-group w-100">
-                                  <button type="submit" name="itemId" value="@item.Id" class="btn btn-success p-0 pt-2 pb-2">View</button>
-                                  <button type="submit" name="itemId" value="@item.Id" asp-controller="Item" asp-action="Edit" class="btn btn-warning p-0 pt-2 pb-2">Edit</button>
-                                  <button type="submit" name="itemId" value="@item.Id" asp-controller="Item" asp-action="Delete" class="btn btn-danger p-0 pt-2 pb-2">Delete</button>
-                              </div>
+                              
+                                  <button type="submit" name="itemId" value="@item.Id" class="btn btn-success p-0 pt-2 pb-2 rounded w-50">View</button>
+                                  
+                              
                           </form>
 
                       </div>

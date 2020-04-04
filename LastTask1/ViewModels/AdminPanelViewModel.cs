@@ -11,7 +11,7 @@ namespace LastTask1.ViewModels
     {
         public User User { get; set; }
         public List<User> Users { get; set; }
-        public List<IdentityRole> AllRoles { get; set; }
-        public IList<string> UserRoles { get; set; }
+        
+
     }
 }

@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Identity;
 using LastTask1.Models;
 using LastTask1.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-
+using System.Collections.Generic;
 
 namespace CustomIdentityApp.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize]
     public class UsersController : Controller
     {
         UserManager<User> _userManager;
@@ -19,8 +19,23 @@ namespace CustomIdentityApp.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index() => View(_userManager.Users.ToList());
+        public async Task<IActionResult> Index(string userName)
+        {
+            User user = await _userManager.FindByNameAsync(userName);
+            List<User> Users = _userManager.Users.ToList();
+            AdminPanelViewModel model = new AdminPanelViewModel()
+            {
+                User = user,
+                Users = Users
+            };
+            return View(model);
+        }
  
+        public async Task<IActionResult> ChangeRole(string role)
+        {
+            
+            return RedirectToAction("Index", "Users");
+        }
         [HttpPost]
         public async Task<ActionResult> Delete(string id)
         {
