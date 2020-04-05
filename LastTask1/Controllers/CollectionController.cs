@@ -116,6 +116,7 @@ namespace LastTask1.Controllers
             string[] strings = Request.Form["Str"];
             string[] dates = Request.Form["Date"];
             string[] booles = Request.Form["Bool"];
+            string[] texts = Request.Form["Text"];
             for(int i = 0; i < booles.Length; i++)
             {
                 if (booles[i] == "$$$$$")
@@ -127,6 +128,7 @@ namespace LastTask1.Controllers
                 ["str"] = strings,
                 ["date"] = dates,
                 ["bool"] = booles,
+                ["text"] = texts
             };
 
             

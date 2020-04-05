@@ -21,14 +21,16 @@ namespace LastTask1.Controllers
         private readonly UserManager<User> _userManager;
         private readonly CommentContext _commentContext;
         private readonly LikeContext _likeContext;
+        private readonly TagContext _tagContext;
         
-        public ItemController(LikeContext likeContext, ItemContext context, CollectionContext collectionContext, UserManager<User> userManager, CommentContext commentContext)
+        public ItemController(TagContext tagContext, LikeContext likeContext, ItemContext context, CollectionContext collectionContext, UserManager<User> userManager, CommentContext commentContext)
         {
             _collectionContext = collectionContext;
             _itemContext = context;
             _userManager = userManager;
             _commentContext = commentContext;
             _likeContext = likeContext;
+            _tagContext = tagContext;
         }
 
 
@@ -183,7 +185,7 @@ namespace LastTask1.Controllers
             List<Collection> Collections = _collectionContext.Collections.Where(o => o.Title.Contains(val) || o.Description.Contains(val)).ToList(); 
             string result = "[" + JsonConvert.SerializeObject(Items) + ","+
                 JsonConvert.SerializeObject(Collections) + ","+
-                JsonConvert.SerializeObject(Comments) +
+                JsonConvert.SerializeObject(Comments)+
 
                 "]";
             return Json(result);
@@ -230,6 +232,21 @@ namespace LastTask1.Controllers
                 nLikes = 0,
                 Type = "Item"
             };
+            List<Tag> Tagss = _tagContext.Tags.ToList();
+            string[] ListTag = Tags.Split(" ");
+            foreach(var tag in ListTag)
+            {
+                var result = _tagContext.Tags.Where(o => o.Text == tag).SingleOrDefault();
+                if (result == null) {
+                    Tag Tag = new Tag() 
+                    { 
+                        Id = Guid.NewGuid().ToString(), 
+                        Text = tag
+                    };
+                    _tagContext.Add(Tag);
+                        };
+            }
+            await _tagContext.SaveChangesAsync();
             _itemContext.Add(item);
             collection.nItems++;
             user.nItems++;

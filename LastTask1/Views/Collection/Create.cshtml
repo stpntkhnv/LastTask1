@@ -69,6 +69,7 @@
                     <option>String</option>
                     <option>Date</option>
                     <option>Int</option>
+                    <option>Text</option>
                 </select>
                 <button type="button" onclick="addField()" class="btn btn-pink text-white">Add new field</button>
             </div>
@@ -92,8 +93,14 @@
     function addField() {
         var type = $('.select').val();
 
+        switch (type) {
+            case 'Text':
+                $('<div class="d-flex w-100 mt-5 align-items-center parent bool">' +
 
-	switch (type) {
+				'<input type="text" class="w-100 ml-5 form-control" placeholder="Name of field"  id="Text" name="Text">' +
+				'<button type="button" class="btn btn-danger dop-area" onclick="deleteField(event.target)">Delete</button>' +
+				'</div>').insertBefore($(".insert-before"));
+			break;
 		case 'Bool':
 			$('<div class="d-flex w-100 mt-5 align-items-center parent bool">' +
 
