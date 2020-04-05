@@ -29,7 +29,7 @@ namespace CustomIdentityApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = new User { Email = model.Email, UserName = model.UserName, nItems = 0, Role = "user"};
+                User user = new User { Email = model.Email, UserName = model.UserName, nItems = 0, Role = "user", nCollections = 0, nComments = 0, nLikes = 0};
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

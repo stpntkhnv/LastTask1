@@ -3,115 +3,241 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-    <link href="~/css/LoginRegister.css" rel="stylesheet" />
-    <style>
-        .select-view:hover{
-				transition: 0.3s;
-				background: gray;
-				cursor: pointer;
-			}
+<link href="~/css/LoginRegister.css" rel="stylesheet" />
+<style>
+    .select-view:hover {
+        transition: 0.3s;
+        background: gray;
+        cursor: pointer;
+    }
 
-			@@media(max-width: 767px){
-				.sel-view{
-					padding: 0 !important;
-				}
-			}
-    </style>
+    @@media(max-width: 767px) {
+        .sel-view {
+            padding: 0 !important;
+        }
+    }
+</style>
 
-    <div class="container p-0 bg-white shadow">
-        <div class="header w-100 d-flex flex-column justify-content-end p-0" style="height: 40vh; background: url(https://img2.goodfon.ru/original/1440x900/8/e7/killzone-shadow-fall-gorod-4443.jpg); background-size: cover; ">
+<div class="container p-0 bg-white shadow">
+    <div class="header w-100 d-flex flex-column justify-content-end p-0" style="height: 40vh; background: url(https://img2.goodfon.ru/original/1440x900/8/e7/killzone-shadow-fall-gorod-4443.jpg); background-size: cover; ">
 
-            <div class="header-string w-100 row p-0 m-0 d-none d-md-flex" style="height: 70px;">
+        <div class="header-string w-100 row p-0 m-0 d-none d-md-flex" style="height: 70px;">
 
-                <img src="https://pbs.twimg.com/profile_images/926488420645523456/hwKSfqNj.jpg" class="d-md-block d-none" style="width: 140px; height: 140px; position: relative; ">
+            <img src="https://pbs.twimg.com/profile_images/926488420645523456/hwKSfqNj.jpg" class="d-md-block d-none" style="width: 140px; height: 140px; position: relative; ">
 
-                <div class="col h-100">
-                    <h1 style="margin-left: 20px">admin</h1>
-                </div>
-                <div class="col h-100 d-flex justify-content-end align-items-center">
-
-                    <button class="btn btn-warning">Edit profile</button>
-                    <button class="btn btn-danger">Delete account</button>
-                </div>
+            <div class="col h-100">
+                <h1 style="margin-left: 20px">admin</h1>
             </div>
+            <div class="col h-100 d-flex justify-content-end align-items-center">
 
-        </div>
-
-
-        <div class="w-100 d-flex flex-column align-items-center my-5 d-md-none">
-            <img src="https://pbs.twimg.com/profile_images/926488420645523456/hwKSfqNj.jpg" class="w-50 rounded-circle">
-            <p>User admin</p>
-            <div class="w-75 btn-group">
                 <button class="btn btn-warning">Edit profile</button>
                 <button class="btn btn-danger">Delete account</button>
             </div>
         </div>
 
+    </div>
 
-        <div style="height: 70px" class="">
-            <div class="d-flex row m-0 sel-view h-100" style="padding-left: 140px">
-                <div class="col-12 col-md select-view select-view-col d-flex justify-content-center align-items-center">Collections(1140)  </div>
-                <div class="col-12 col-md select-view select-view-items d-flex justify-content-center align-items-center">Items(2243)</div>
-                <div class="col-12 col-md select-view select-view-com d-flex justify-content-center align-items-center">Comments(840)</div>
-                <div class="col-12 col-md select-view select-view-likes d-flex justify-content-center align-items-center">Likes(920)</div>
-            </div>
 
+    <div class="w-100 d-flex flex-column align-items-center my-5 d-md-none">
+        <img src="https://pbs.twimg.com/profile_images/926488420645523456/hwKSfqNj.jpg" class="w-50 rounded-circle">
+        <p>User admin</p>
+        <div class="w-75 btn-group">
+            <button class="btn btn-warning">Edit profile</button>
+            <button class="btn btn-danger">Delete account</button>
         </div>
+    </div>
 
 
-
-        <div class="container-fluid nt-5 block-content block-content-col grid">
-            <h2 class="mt-5">Collections</h2>
-            <div class="row">
-                @foreach (var collection in Model.Collections)
-                {
-                    <div class=" item col-xl-4 col-md-6 col-12 mt-3 mx-0" id="card">
-                        <div class="card w-100 bg-white d-inline-flex flex-column align-items-center justify-content-between" style="box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
-                                                                      -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
-                                                                      -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);">
-                            <img src="@collection.Img" class="w-100">
-                            <p class="h3-responsive name">@collection.Title</p>
-
-                            <p class="p-3" style="max-height: 20.5em; overflow: hidden;">
-                                @collection.Description
-                            </p>
-
-                            <div class="btn-group w-100 d-flex justify-content-center">
-                                <form asp-controller="Collection" asp-action="Collection" class="w-100 d-flex justify-content-center h-100">
-                                    <div class="btn-group w-100">
-                                        <button type="submit" name="collectionId" value="@collection.Id" class="btn btn-success p-0 pt-2 pb-2">View</button>
-                                        <button type="submit" name="collectionId" value="@collection.Id" asp-controller="Collection" asp-action="Delete" class="btn btn-danger p-0 pt-2 pb-2">Delete</button>
-                                    </div>
-                                </form>
-
-                            </div>
-                        </div>
-
-                    </div>
-                }
-
-            </div>
-
-        </div>
-        <div class="container-fluid nt-5 block-content block-content-items" style="display: none;">
-            <h2 class="mt-5">Items</h2>
-        </div>
-        <div class="container-fluid nt-5 block-content block-content-likes" style="display: none;">
-            <h2 class="mt-5">Likes</h2>
-        </div>
-        <div class="container-fluid nt-5 block-content block-content-com" style="display: none;">
-            <h2 class="mt-5">Comments</h2>
+    <div style="height: 70px" class="">
+        <div class="d-flex row m-0 sel-view h-100" style="padding-left: 140px">
+            <div class="col-12 col-md select-view select-view-col d-flex justify-content-center align-items-center" onclick="viewCol()">Collections(@Model.User.nCollections)  </div>
+            <div class="col-12 col-md select-view select-view-items d-flex justify-content-center align-items-center" onclick="viewIt()">Items(@Model.User.nItems)</div>
+            <div class="col-12 col-md select-view select-view-com d-flex justify-content-center align-items-center" onclick="viewCom()">Comments(@Model.User.nComments)</div>
+            <div class="col-12 col-md select-view select-view-likes d-flex justify-content-center align-items-center" onclick="viewLi()">Likes(@Model.User.nLikes)</div>
         </div>
 
     </div>
 
-    <script type="text/javascript">
+
+
+    <div class="container-fluid nt-5 block-content block-content-col grid p-0 m-0">
+
+        <div class="row p-0 m-0">
+            @foreach (var collection in Model.Collections)
+            {
+                <div class="item col-xl-4 col-md-6 col-12 mt-3 mx-0" id="card">
+                    <div class="card w-100 bg-white d-inline-flex flex-column align-items-center justify-content-between" style="box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
+                                                                      -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
+                                                                      -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);">
+                        <img src="@collection.Img" class="w-100">
+                        <p class="h3-responsive name">@collection.Title</p>
+
+                        <p class="p-3" style="max-height: 20.5em; overflow: hidden;">
+                            @collection.Description
+                        </p>
+
+                        <div class="btn-group w-100 d-flex justify-content-center">
+                            <form asp-controller="Collection" asp-action="Collection" class="w-100 d-flex justify-content-center h-100">
+                                <div class="btn-group w-100">
+                                    <button type="submit" name="collectionId" value="@collection.Id" class="btn btn-success p-0 pt-2 pb-2">View</button>
+                                    <button type="submit" name="collectionId" value="@collection.Id" asp-controller="Collection" asp-action="Delete" class="btn btn-danger p-0 pt-2 pb-2">Delete</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+
+    <div class="container-fluid nt-5 block-content block-content-likes grid p-0 m-0" style="display: none">
+
+        <div class="row p-0 m-0">
+            @foreach (var item in Model.Likes)
+            {
+                <div class="item col-xl-4 col-md-6 col-12 mt-3 mx-0" id="card">
+                    <div class="card w-100 bg-white d-inline-flex flex-column align-items-center justify-content-between" style="box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
+                                                                      -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
+                                                                      -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);">
+                        <img src="@item.ImageUrl" class="w-100">
+                        <p class="h3-responsive name">@item.Title</p>
+
+                        <p class="p-3" style="max-height: 20.5em; overflow: hidden;">
+                            @item.Description
+                        </p>
+
+                        <div class="btn-group w-100 d-flex justify-content-center">
+                            <form asp-controller="Item" asp-action="Item" class="w-100 d-flex justify-content-center h-100">
+                                <div class="btn-group w-100">
+                                    <button type="submit" name="itemId" value="@item.Id" class="btn btn-success p-0 pt-2 pb-2">View</button>
+                                    <button type="submit" name="itemId" value="@item.Id" asp-controller="Item" asp-action="Delete" class="btn btn-danger p-0 pt-2 pb-2">Delete</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+
+    <div class="container-fluid nt-5 block-content block-content-com grid p-0 m-0" style="display: none">
+
+        <div class="row p-0 m-0">
+            @foreach (var item in Model.Comments)
+            {
+                <div class="item col-xl-4 col-md-6 col-12 mt-3 mx-0" id="card">
+                    <div class="card w-100 bg-white d-inline-flex flex-column align-items-center justify-content-between" style="box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
+                                                                      -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
+                                                                      -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);">
+                        <img src="@item.ImageUrl" class="w-100">
+                        <p class="h3-responsive name">@item.Title</p>
+
+                        <p class="p-3" style="max-height: 20.5em; overflow: hidden;">
+                            @item.Description
+                        </p>
+
+                        <div class="btn-group w-100 d-flex justify-content-center">
+                            <form asp-controller="Item" asp-action="Item" class="w-100 d-flex justify-content-center h-100">
+                                <div class="btn-group w-100">
+                                    <button type="submit" name="itemId" value="@item.Id" class="btn btn-success p-0 pt-2 pb-2">View</button>
+                                    <button type="submit" name="itemId" value="@item.Id" asp-controller="Item" asp-action="Delete" class="btn btn-danger p-0 pt-2 pb-2">Delete</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+    <div class="container-fluid nt-5 block-content block-content-items grid p-0 m-0" style="display: none">
+
+        <div class="row p-0 m-0">
+            @foreach (var item in Model.Items)
+            {
+                <div class="item col-xl-4 col-md-6 col-12 mt-3 mx-0" id="card">
+                    <div class="card w-100 bg-white d-inline-flex flex-column align-items-center justify-content-between" style="box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
+                                                                      -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
+                                                                      -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);">
+                        <img src="@item.ImageUrl" class="w-100">
+                        <p class="h3-responsive name">@item.Title</p>
+
+                        <p class="p-3" style="max-height: 20.5em; overflow: hidden;">
+                            @item.Description
+                        </p>
+
+                        <div class="btn-group w-100 d-flex justify-content-center">
+                            <form asp-controller="Item" asp-action="Item" class="w-100 d-flex justify-content-center h-100">
+                                <div class="btn-group w-100">
+                                    <button type="submit" name="itemId" value="@item.Id" class="btn btn-success p-0 pt-2 pb-2">View</button>
+                                    <button type="submit" name="itemId" value="@item.Id" asp-controller="Item" asp-action="Delete" onclick="deleteItem(this)" class="btn btn-danger p-0 pt-2 pb-2">Delete</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+ 
+
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../../../../assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
+<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
+<script src="~/js/Collection.js" type="text/javascript"></script>
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
+<script type="text/javascript">
     var $grid = $('.grid').isotope({
         itemSelector: '.item',
         masonry: {
             columnWidth: '.item'
         }
-        });
+    });
 
 
-    </script>
+    function viewCol() {
+        $('.block-content').css('display', 'none');
+        $('.block-content-col').css('display', 'flex');
+    }
+    function viewCom() {
+        $('.block-content').css('display', 'none');
+        $('.block-content-com').css('display', 'flex');
+    }
+    function viewIt() {
+        $('.block-content').css('display', 'none');
+        $('.block-content-items').css('display', 'flex');
+    }
+    function viewLi() {
+        $('.block-content').css('display', 'none');
+        $('.block-content-likes').css('display', 'flex');
+    }
+
+    function deleteItem(e) {
+        $(e).closest('item').remove();
+    }
+
+</script>

@@ -144,6 +144,8 @@ namespace LastTask1.Controllers
                 Img = ImageUrl,
                 Type = "Collection"
             };
+            User.nCollections++;
+            await _userManager.UpdateAsync(User);
 
             await _collectionContext.Collections.AddAsync(collection);
             await _collectionContext.SaveChangesAsync();
@@ -151,17 +153,25 @@ namespace LastTask1.Controllers
             return RedirectToAction("Collection", "Collection", new{userName = userName, collectionId =  collection.Id});
         }
 
-        public async Task<ActionResult> Delete(string id)
+        public async Task<ActionResult> Delete(string collectionId)
         {
-            Collection collection = GetCollection(id);
+            Collection collection = _collectionContext.Collections.Where(o => o.Id == collectionId).SingleOrDefault();
             string userName = collection.UserName;
+            User user = await _userManager.FindByNameAsync(userName);
             _collectionContext.Collections.Remove(collection);
             await _collectionContext.SaveChangesAsync();
             var items = _itemContext.Items.ToList();
             foreach (var item in items)
-                if (item.CollectionId == id) _itemContext.Remove(item);
+                if (item.CollectionId == collectionId)
+                { 
+                    _itemContext.Remove(item);
+                    user.nItems--;
+                }
+            user.nCollections--;
+            await _userManager.UpdateAsync(user);
+
             await _itemContext.SaveChangesAsync();
-            return RedirectToAction("Index", "Collection", new { userName = userName });
+            return RedirectToAction("Index", "Profile", new { userName = userName });
         }
 
     }

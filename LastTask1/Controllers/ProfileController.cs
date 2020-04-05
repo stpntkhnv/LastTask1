@@ -29,7 +29,12 @@ namespace LastTask1.Controllers
             _likeContext = likeContext;
         }
 
-        
+        public IActionResult Table()
+        {
+            List<Item> Items = _itemContext.Items.ToList();
+            CollectionViewModel model = new CollectionViewModel() { Items = Items };
+            return View(model);
+        }
         // GET: Profile
         public async Task<ActionResult> Index(string userName)
         {

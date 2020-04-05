@@ -66,6 +66,9 @@ namespace LastTask1.Controllers
                 Type = "Comment"
             };
             _commentContext.Add(comment);
+            User.nComments++;
+            await _userManager.UpdateAsync(User);
+
             await _itemContext.SaveChangesAsync();
             await _commentContext.SaveChangesAsync();
             return RedirectToAction("Item", "Item", new { itemId = itemId});
@@ -91,6 +94,7 @@ namespace LastTask1.Controllers
             {
                 _likeContext.Remove(Like);
                 Item.nLikes--;
+                User.nLikes--;
             }
             else
             {
@@ -100,11 +104,13 @@ namespace LastTask1.Controllers
                     UserName = userName,
                     ItemId = itemId
                 };
-                
+                User.nLikes++;
                 _likeContext.Add(like);
                 Item.nLikes++;
 
             }
+            await _userManager.UpdateAsync(User);
+
             await _likeContext.SaveChangesAsync();
             await _itemContext.SaveChangesAsync();
             return RedirectToAction("Item", "Item", new { itemId = itemId });
@@ -227,6 +233,7 @@ namespace LastTask1.Controllers
             _itemContext.Add(item);
             collection.nItems++;
             user.nItems++;
+            await _userManager.UpdateAsync(user);
             await _collectionContext.SaveChangesAsync();
             await _itemContext.SaveChangesAsync();
             if(goToNew == true)
@@ -239,14 +246,19 @@ namespace LastTask1.Controllers
             Item item = _itemContext.Items
                 .Where(o => o.Id == itemId)
                 .FirstOrDefault();
+            User user = await _userManager.FindByNameAsync(item.UserName);
+
             _itemContext.Items.Remove(item);
             Collection collection = _collectionContext.Collections
                 .Where(o => o.Id == item.CollectionId)
                 .FirstOrDefault();
             collection.nItems--;
+            user.nItems--;
+            await _userManager.UpdateAsync(user);
+
             await _collectionContext.SaveChangesAsync();
             await _itemContext.SaveChangesAsync();
-            return RedirectToAction("Index", "Item", new { id = collection.Id });
+            return RedirectToAction("Index", "Profile", new { userName = collection.UserName });
         }
 
         public async Task<IActionResult> Edit(string itemId)

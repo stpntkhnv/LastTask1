@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace LastTask1
 {
@@ -40,8 +42,14 @@ namespace LastTask1
             services.AddDbContext<LikeContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.AddControllersWithViews()
+                .AddViewLocalization();// добавляем локализацию представлений;
+
 
             services.AddControllersWithViews();
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +66,19 @@ namespace LastTask1
                 app.UseHsts();
             }
 
+
+            var supportedCultures = new[]
+            {
+                new CultureInfo("ru"),
+                new CultureInfo("en")
+            };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("ru"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

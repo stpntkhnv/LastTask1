@@ -10,6 +10,10 @@ namespace LastTask1.Models
     {
         
         public int nItems { get; set; }
+
+        public int nComments { get; set; }
+        public int nLikes { get; set; }
+        public int nCollections { get; set; }
         public string Role { get; set; }
     }
 }

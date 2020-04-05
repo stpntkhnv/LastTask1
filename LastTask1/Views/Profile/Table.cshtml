@@ -1,0 +1,28 @@
+﻿@model LastTask1.ViewModels.CollectionViewModel
+@{
+    ViewData["Title"] = "Table";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <table cellpadding="0" cellspacing="0" border="0" id="table" class="sortable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Desc</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.Description</td>
+            </tr>
+            }
+
+
+
+        </tbody>
+    </table>
+<script type="text/javascript" src="~/js/TableSort2.js"></script>
