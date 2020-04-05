@@ -21,7 +21,7 @@
 </style>
 <link href="~/css/LoginRegister.css" rel="stylesheet" />
 <div id="size1" class="container d-flex justify-content-center">
-    <form id="size" class="w-75 shadow bg-white d-flex flex-column align-items-center">
+    <form id="size" class="w-75 shadow bg-white d-flex flex-column align-items-center" asp-controller="Account" asp-action="Register">
         <h1 class="mt-5 text-center">Register new account</h1>
         <div class="md-form mb-0 w-75">
             <i class="fas fa-envelope prefix"></i>
@@ -42,6 +42,6 @@
             <input asp-for="PasswordConfirm" required type="password" id="inputValidationEx2" class="form-control validate" placeholder="ConfirmPassword">
             <span asp-validation-for="PasswordConfirm"></span>
         </div>
-        <input id="signup" type="submit" asp-controller="Account" asp-action="Register" class="btn btn-success btn-rounded" value="Register" />
+        <input id="signup" type="submit"  class="btn btn-success btn-rounded" value="Register" />
     </form>
 </div>

@@ -31,12 +31,14 @@ namespace CustomIdentityApp.Controllers
             return View(model);
         }
  
-        public async Task<IActionResult> ChangeRole(string role)
+        public async Task<IActionResult> ChangeRole(string role, string userName)
         {
-            
-            return RedirectToAction("Index", "Users");
+            User user = await _userManager.FindByNameAsync(userName);
+            user.Role = role;
+
+            var result = await _userManager.UpdateAsync(user);
+            return RedirectToAction("Index", "Users", new { userName = userName});
         }
-        [HttpPost]
         public async Task<ActionResult> Delete(string id)
         {
             User user = await _userManager.FindByIdAsync(id);
@@ -44,7 +46,7 @@ namespace CustomIdentityApp.Controllers
             {
                 IdentityResult result = await _userManager.DeleteAsync(user);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { userName = user.UserName});
         }
     }
 }

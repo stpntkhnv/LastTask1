@@ -8,10 +8,7 @@ namespace LastTask1.Models
     public class Collection
     {
         public string Type { get; set; }
-        public Collection()
-        {
-            Type = "Collection";
-        }
+        
         public string Id { get; set; }
         public string UserId { get; set; }
         public string UserName { get; set; }

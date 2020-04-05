@@ -141,7 +141,8 @@ namespace LastTask1.Controllers
                 Description = Description,
                 ShortDescription = ShortDescription,
                 Fields = JsonSerializer.Serialize(dictionary),
-                Img = ImageUrl
+                Img = ImageUrl,
+                Type = "Collection"
             };
 
             await _collectionContext.Collections.AddAsync(collection);

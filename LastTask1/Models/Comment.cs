@@ -8,10 +8,7 @@ namespace LastTask1.Models
     public class Comment
     {
         public string Type { get; set; }
-        public Comment()
-        {
-            Type = "Comment";
-        }
+       
         public string Id { get; set; }
         public string ItemId { get; set; }
         public string UserName { get; set; }

@@ -62,7 +62,8 @@ namespace LastTask1.Controllers
                 UserName = User.UserName,
                 ItemId = itemId,
                 Text = Text,
-                Id = Guid.NewGuid().ToString()
+                Id = Guid.NewGuid().ToString(),
+                Type = "Comment"
             };
             _commentContext.Add(comment);
             await _itemContext.SaveChangesAsync();
@@ -218,7 +219,10 @@ namespace LastTask1.Controllers
                 Tags = Tags,
                 CollectionName = collection.Title,
                 ImageUrl = ImageUrl,
-                OptionalFields = JsonConvert.SerializeObject(ItemFields)              
+                OptionalFields = JsonConvert.SerializeObject(ItemFields),
+                nComments = 0,
+                nLikes = 0,
+                Type = "Item"
             };
             _itemContext.Add(item);
             collection.nItems++;

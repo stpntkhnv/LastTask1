@@ -3,11 +3,11 @@
     ViewBag.Title = "Список пользователей";
 }
 
-
-    <div class="container">
-        <table id="dtMaterialDesignExample" class="table table-striped" cellspacing="0" width="100%">
-            <thead>
-                <tr>
+    <link href="~/css/LoginRegister.css" rel="stylesheet" />
+    <div class="container p-0">
+        <table id="dtMaterialDesignExample" class="table table-striped bg-dark m-0 p-0" cellspacing="0" width="100%">
+            <thead class="w-100 bg-info">
+                <tr class="bg-dark text-white w-100">
                     <th class="th-sm">
                         Id
                     </th>
@@ -22,7 +22,12 @@
             <tbody>
                 @foreach (var user in Model.Users)
                 {
-                <tr>
+                <tr @if (user.UserName == User.Identity.Name) {
+                    @: class="bg-success" 
+                    } else {
+                @:  class="bg-white"
+                }
+                    >
                     <th class="th-sm">
                         @user.Id
                     </th>
@@ -32,38 +37,26 @@
 
                     <th class="th-sm">
                         <p class="font-weight-bold">@user.Role</p>
-                        @if (Model.User.Role == "admin")
+
+                        @if (user.Role == "user")
                         {
-                            @if (user.Role == "user")
-                            {
-                                @: <a onclick="changeRole(event.targer)">Set admin</a>
-                            }
-                            else
-                            {
-                                @: <a onclick="changeRole(event.target)" id="@User.Identity.Name">Set user</a>
-                            }
-
+                            <a class="nav-link" asp-controller="Users" asp-action="ChangeRole" asp-route-role="admin" asp-route-userName="@user.UserName">Set admin</a>
                         }
-
-
+                        else
+                        {
+                            <a class="nav-link" asp-controller="Users" asp-action="ChangeRole" asp-route-role="user" asp-route-userName="@user.UserName">Set user</a>
+                        }
+                    </th>
+                    <th class="th-sm">
+                        <a asp-action="Delete" asp-controller="Users" asp-route-id="@user.Id">Delete</a>
                     </th>
                 </tr>
                 }
+
+
 
             </tbody>
             </table>
     </div>
 
 
-    <script type="text/javascript">
-        
-        function changeRole(e) {
-            alert($(e).att('id'));
-            $.ajax({
-            url: "/Users/ChangeRole",
-            data: {
-                role: e
-            }
-        });
-        }
-    </script>
