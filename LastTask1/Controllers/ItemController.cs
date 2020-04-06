@@ -22,6 +22,7 @@ namespace LastTask1.Controllers
         private readonly CommentContext _commentContext;
         private readonly LikeContext _likeContext;
         private readonly TagContext _tagContext;
+        public MarkdownSharp.Markdown markdown = new MarkdownSharp.Markdown();
         
         public ItemController(TagContext tagContext, LikeContext likeContext, ItemContext context, CollectionContext collectionContext, UserManager<User> userManager, CommentContext commentContext)
         {
@@ -35,20 +36,12 @@ namespace LastTask1.Controllers
 
 
 
-        public async Task<IActionResult> Index(string itemId)
+        public IActionResult Index()
         {
-            Item item = _itemContext.Items
-                .Where(o => o.Id == itemId)
-                .FirstOrDefault();
-            Collection collection = _collectionContext.Collections
-                .Where(o => o.Id == item.CollectionId)
-                .FirstOrDefault();
-            User user = await _userManager.FindByNameAsync(collection.UserName);
-            ItemViewModel model = new ItemViewModel()
+            List<Item> Items = _itemContext.Items.ToList().OrderByDescending(o => o.Date).ToList(); 
+            MyItemsViewModel model = new MyItemsViewModel()
             {
-                Item = item,
-                Collection = collection,
-                User = user
+                Items = Items
             };
             return View(model);
         }
@@ -177,15 +170,6 @@ namespace LastTask1.Controllers
             };
             return View(model);
         }
-        public IActionResult AllYourItems()
-        {
-            HomeViewModel model = new HomeViewModel()
-            {
-                Items = _itemContext.Items.ToList(),
-                Collections = _collectionContext.Collections.ToList()
-            };
-            return View(model);
-        }
 
 
 
@@ -226,7 +210,7 @@ namespace LastTask1.Controllers
             User user = await _userManager.FindByNameAsync(collection.UserName);
             Dictionary<string, string[]> CollectionFields = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(collection.Fields);
             Dictionary<string, string> ItemFields = new Dictionary<string, string>();
-
+            //var markdown = new MarkdownSharp.Markdown();
             foreach (var colStr in CollectionFields)
             {
                 string type = colStr.Key;
@@ -236,26 +220,29 @@ namespace LastTask1.Controllers
                     string value = Request.Form[name];
                     if (value == "" || value == null)
                         value = "off";
-                    string s = type + "$$$$$" + value;
-                    ItemFields.Add(name, s);
+                    string s = type + "$$$$$" + markdown.Transform(value); 
+                    ItemFields.Add(markdown.Transform(name), s);
                 }                                   
             }
-
+            
+            string html = markdown.Transform(Description);
+            string title = markdown.Transform(Title);
+            
             Item item = new Item
             {
                 Id = Guid.NewGuid().ToString(),
                 CollectionId = collectionId,
                 UserName = collection.UserName,
-                Title = Title,
-                Description = Description,
-                ShortDescription = ShortDescription,
+                Title = title,
+                Description = html,
                 Tags = Tags,
                 CollectionName = collection.Title,
                 ImageUrl = ImageUrl,
                 OptionalFields = JsonConvert.SerializeObject(ItemFields),
                 nComments = 0,
                 nLikes = 0,
-                Type = "Item"
+                Type = "Item",
+                Date = DateTime.Now
             };
             List<Tag> Tagss = _tagContext.Tags.ToList();
             string[] ListTag = Tags.Split(" ");
@@ -271,6 +258,7 @@ namespace LastTask1.Controllers
                     _tagContext.Add(Tag);
                         };
             }
+            
             await _tagContext.SaveChangesAsync();
             _itemContext.Add(item);
             collection.nItems++;
@@ -325,7 +313,8 @@ namespace LastTask1.Controllers
             User user = await _userManager.FindByNameAsync(collection.UserName);
             Dictionary<string, string[]> CollectionFields = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(collection.Fields);
             Dictionary<string, string> ItemFields = new Dictionary<string, string>();
-
+            string html = markdown.Transform(Description);
+            string title = markdown.Transform(Title);
             foreach (var colStr in CollectionFields)
             {
                 string type = colStr.Key;
@@ -335,14 +324,14 @@ namespace LastTask1.Controllers
                     string value = Request.Form[name];
                     if (value == "" || value == null)
                         value = "off";
-                    string s = type + "$$$$$" + value;
-                    ItemFields.Add(name, s);
+                    string s = type + "$$$$$" + markdown.Transform(value);
+                    ItemFields.Add(markdown.Transform(name), s);
                 }
             }
 
             item.OptionalFields = JsonConvert.SerializeObject(ItemFields);
-            item.Title = Title;
-            item.Description = Description;
+            item.Title = title;
+            item.Description = html;
             item.Tags = Tags;
             item.ImageUrl = ImageUrl;
 

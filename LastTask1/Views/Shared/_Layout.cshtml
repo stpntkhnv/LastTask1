@@ -32,13 +32,15 @@
                  @: input, textarea, select, select option {background: #2e3035 !important; color: white !important;}
                     @: .drag{background: #2e3035; color: white !important;border-color: white !important;}
                        @: #searchString{background: black !important;}
+                          @: table tbody th{ color: black !important;}
     }
-    else
+    else if(Context.Request.Cookies["theme"] == "light")
     {
         @:.card{
            @: background: white !important; }
                                   @:  #wrapper{background: white !important;}
                                       @: .theme-white{background: white !important;}
+                                         @: nav{color: black !important;}
     }
     
 </style>
@@ -52,7 +54,9 @@
     <!--Main Navigation-->
     <header>
 
-        <nav class="navbar fixed-top navbar-expand-lg navbar-dark  d-flex scrolling-navbar" style="background: black; height:70px;">
+        <nav class="navbar fixed-top @if (Context.Request.Cookies["theme"] == "dark") { @:navbar-dark
+                } navbar-expand-lg @if (Context.Request.Cookies["theme"] == "light") {@: bg-light text-black navbar-light 
+             }   d-flex scrolling-navbar" style="background: black; height:70px;">
             <a class="navbar-brand" href="#"><strong>Itransition</strong></a>
 
             <!-- Search form -->
@@ -98,7 +102,7 @@
                             <a class="nav-link" asp-controller="Users" asp-action="Index" asp-route-userName="@User.Identity.Name">@Localizer["Admin"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Account" asp-action="ChangeTheme" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">
+                            <a class="nav-link" id="theme" asp-controller="Account" asp-action="ChangeTheme" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">
                                 @if (Context.Request.Cookies["theme"] == "light")
                                 {
                                     @: <i class="far fa-sun"></i>

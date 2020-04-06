@@ -9,6 +9,17 @@
 }
 <link href="~/css/LoginRegister.css" rel="stylesheet" />
 <style>
+    .tag {
+        margin: 10px;
+     
+    }
+    .tag:hover{
+        cursor: pointer;
+    }
+    .tags-cloud{
+            max-height: 18em;
+            overflow-y: scroll;
+        }
     @@media (max-width: 440px) {
         .container {
             margin: 0 !important;
@@ -26,25 +37,24 @@
 {
     @: bg-white
 }
-" style="box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
-													  -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
-													  -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33); background:#2e3035;">
+" style="        box-shadow: 0px 1px 10px 5px rgba(0,0,0,0.33);
+        -webkit-box-shadow: 0px 1px 10px 5px rgba(0,0,0,0.33);
+        -moz-box-shadow: 0px 1px 10px 5px rgba(0,0,0,0.33);
+        background: #2e3035;">
 
-    <div class="tags-cloud w-100 border-bottom @if (Context.Request.Cookies["theme"] == "dark") {@: border-white 
-         } d-flex align-items-center" style="height: 50px; overflow-x:hidden; ">
+    <div class="tags-cloud w-100 my-3 border-bottom @if (Context.Request.Cookies["theme"] == "dark") {@: border-white 
+         } " >
         @foreach (var tag in Model.Tags)
         {
-            <div class="tag bg-warning px-3 py-0 mr-2" style="border-radius: 100px/50px;">@tag.Text</div>
+            <div class="tag d-inline-block btn bg-success px-3 py-0 rounded mr-2">@tag.Text</div>
         }
     </div>
-    <form asp-controller="Account" asp-action="ChangeTheme" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">
-        <button type="submit">theme</button>
-    </form>
+    <div class="selected-tags">
+        <a class="clear" style="display: none">clear all</a>
+    </div>
 
-    <p>@Context.Request.Cookies["theme"]</p>
-
-    <h1 class="my-4">@Localizer["topCollect"]</h1>
-    <div class="grid w-100">
+    <h1 class="my-4 top-collect">@Localizer["topCollect"]</h1>
+    <div class="grid w-100 top-collect">
         <div class="row m-0 p-0">
             @foreach (var collection in Model.Collections)
             {
@@ -53,14 +63,14 @@
         -webkit-box-shadow: 0px 1px 10px 5px rgba(0,0,0,0.33);
         -moz-box-shadow: 0px 1px 10px 5px rgba(0,0,0,0.33);">
                         <img src="@collection.Img" class="w-100">
-                        <p class="h3-responsive name">@collection.Title (@collection.nItems)</p>
+                        <p class="h3-responsive name">@Html.Raw(collection.Title) (@collection.nItems)</p>
 
                         <p class="p-3" style="max-height: 20.5em; overflow: hidden;">
-                            @collection.Description
+                            @Html.Raw(collection.Description)
                         </p>
 
                         <div class="btn-group w-100 d-flex justify-content-center">
-                            <form asp-controller="Collection" asp-action="Collection" class="w-100 d-flex justify-content-center h-100">
+                            <form asp-controller="Collection" asp-action="Collection" asp-route-collectionId="@collection.Id" class="w-100 d-flex justify-content-center h-100">
                                 <div class="btn-group w-100">
                                     <button type="submit" name="collectionId" value="@collection.Id" class="btn btn-success p-0 pt-2 pb-2">View</button>
                                 </div>
@@ -78,20 +88,26 @@
     <div class="grid w-100">
         <div class="row m-0 p-0">
             @foreach (var item in Model.Items)
-            {
-                <div class="item col-xl-4 col-md-6 col-12 mt-3 mx-0" id="card">
+            { var tags = item.Tags.Split(" ");
+                <div class="item col-xl-4 col-md-6 col-12  mx-0" id="card">
+                    <p class="item-tags" style="display: flex">
+                    @foreach(var tag in tags)
+                    {
+                        @: @tag 
+                    }
+                    </p>
                     <div class="card w-100 bg-white d-inline-flex flex-column align-items-center justify-content-between" style="box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
                                                                       -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
                                                                       -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);">
                         <img src="@item.ImageUrl" class="w-100">
-                        <p class="h3-responsive name">@item.Title</p>
+                        <p class="h3-responsive name">@Html.Raw(item.Title)</p>
 
                         <p class="p-3" style="max-height: 20.5em; overflow: hidden;">
-                            @item.Description
+                            @Html.Raw(item.Description)
                         </p>
 
                         <div class="btn-group w-100 d-flex justify-content-center">
-                            <form asp-controller="Item" asp-action="Item" class="w-100 d-flex justify-content-center h-100">
+                            <form asp-controller="Item" asp-action="Item" asp-route-itemId="@item.Id" class="w-100 d-flex justify-content-center h-100">
                                 <div class="btn-group w-100">
                                     <button type="submit" name="itemId" value="@item.Id" class="btn btn-success p-0 pt-2 pb-2">View</button>
                                 </div>
@@ -119,10 +135,56 @@
 <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
 <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
 <script>
-    var $grid = $('.grid').isotope({
+    var $grid = $('.grid').masonry({
         itemSelector: '.item',
-        masonry: {
+       
             columnWidth: '.item'
+        
+    });
+
+    $('.tag').click(function () {
+        console.log($(this).text());
+        var tag = $(this).text();
+        console.log();
+        $('.top-collect').css('display', 'none');
+        var s = $('.item-tags');
+        console.log(s);
+        for (var i = 0; i < s.length; i++) {
+            var text = $(s[i]).text();
+            if (text.indexOf(tag) < 0) {
+                $(s[i]).closest('.item').css('opacity', '0');
+                $(s[i]).closest('.item').css('height', '0px');
+                $(s[i]).closest('.item').css('bottom', '0px');
+            }
+            
+    
         }
+                $('.grid').masonry({
+                itemSelector: '.item',
+        
+                    columnWidth: '.item'
+        
+                });
+
+
+        $('.selected-tags').prepend('<div class="tag btn d-inline-block rounded bg-success px-3 py-0 mr-2" >' + tag + '</div>');
+        $('.clear').css('display', 'inline-block');
+
+    });
+
+    $('.clear').click(function () {
+        $('.item').css('opacity', '100');
+        $('.item').css('height', 'auto');
+        $('.top-collect').css('display', 'block');
+        $('.selected-tags').find('.tag').remove();
+        $(this).css('display', 'none');
+        $('.grid').masonry({
+                itemSelector: '.item',
+        
+                    columnWidth: '.item'
+        
+        });
+        
+
     });
 </script>

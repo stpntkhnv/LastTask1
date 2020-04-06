@@ -20,7 +20,7 @@
 <div class="container p-0 shadow bg-white">
     <div class="wrapper row m-0 p-0">
         <div class="col-12 col-lg-4 sticky-top d-flex flex-column rounded h-100 align-items-center mt-3 stick">
-            <h1>@Model.Item.Title</h1>
+            <h1>@Html.Raw(Model.Item.Title)</h1>
             <div class="item-img w-75" style="height: 55vh; background: url(@Model.Item.ImageUrl); background-position: center;background-size: cover;"></div>
             <p>@Localizer["Creater"]: @Model.Item.UserName</p>
             <p>@Localizer["Collection"]: @Model.Item.CollectionName</p>
@@ -52,12 +52,12 @@
             @foreach (var field in Fields)
             {
                 string[] s = field.Value.Split("$$$$$");
-                @: <p class="@field.Key.Replace(" ", "") mx-2 h5-responsive border-bottom"><span class="font-weight-bold">@field.Key :</span> @s[1]</p>
+                @: <p class="@field.Key.Replace(" ", "") mx-2 h5-responsive border-bottom"><span class="font-weight-bold">@Html.Raw(field.Key) :</span> @Html.Raw(s[1])</p>
             }
             }
 
         <p class="h4-responsive mx-2 font-weight-bold">@Localizer["Description"]:</p>
-        <p class="h5-responsive mx-2  border-bottom">@Model.Item.Description</p>
+        <p class="h5-responsive mx-2  border-bottom">@Html.Raw(Model.Item.Description)</p>
 
 
         <h3 class="mt-5">@Localizer["CreateComment"]</h3>
@@ -84,7 +84,7 @@
                                     <p class="commentDel">крестик</p>
                                 }
                             </div>
-                            <p>@comment.Text</p>
+                            <p>@Html.Raw(comment.Text)</p>
                         </div>
                     </div>
                 </div>

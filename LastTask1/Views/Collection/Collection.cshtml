@@ -13,13 +13,13 @@
 -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
 -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);">
     <div class="col-lg-4 h-100 border-right border-3 d-flex flex-column align-items-center">
-        <h1 class="text-center m-5">@Localizer["Col"] @Model.Collection.Title</h1>
+        <h1 class="text-center m-5">@Localizer["Col"] @Html.Raw(Model.Collection.Title)</h1>
         <img src="@Model.Collection.Img" class="w-100">
         <p class="h4-responsive pt-3">@Localizer["Theme"] @Model.Collection.Theme</p>
         <p class="h4-responsive">@Localizer["Items"] @Model.Collection.nItems</p>
         <p class="h4-responsive">@Localizer["Creater"] @Model.User.UserName</p>
         <p class="h4-responsive mt-5">@Localizer["Description"]</p>
-        <p class="">@Model.Collection.Description</p>
+        <p class="">@Html.Raw(Model.Collection.Description)</p>
         <form class="d-flex w-100 justify-content-center">
             <div class="btn-group w-75 rounded">
                 <button name="collectionId" asp-controller="Collection" asp-action="Create" value="@Model.Collection.Id" type="submit" class="btn btn-warning">@Localizer["Edit"]</button>
@@ -32,27 +32,27 @@
         <button class="btn btn-success view-table">@Localizer["Table"]</button>
         <button class="btn btn-success view-cards">@Localizer["Cards"]</button>
         <h1>@Localizer["List"]:</h1>
-        <table cellpadding="0" cellspacing="0" border="0" id="table" class="sortable table table-striped table-responsive">
-            <thead class="light-green white-text">
+        <table cellpadding="0" cellspacing="0" border="0" id="table" class="sortable table table-striped table-responsive w-100">
+            <thead class="light-green white-text w-100">
                 <tr>
                     <th class="text-white">@Localizer["Name"]</th>
                     <th class="text-white">@Localizer["Description"]</th>
                     @foreach (var field in Model.OptionalFields)
                     {
-                        <th class="text-white">@field</th>
+                <th class="text-white">@Html.Raw(field)</th>
                     }
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="w-100">
                 @foreach (var item in Model.Items)
                 {var ItemFields = JsonConvert.DeserializeObject<Dictionary<string, string>>(item.OptionalFields);
-                <tr>
-                    <td>@item.Title</td>
-                    <td>@item.Description</td>
+                <tr class="w-100">
+                    <td>@Html.Raw(item.Title)</td>
+                    <td>@Html.Raw(item.Description)</td>
                     @foreach (var val in ItemFields)
                     {
                         string[] s = val.Value.Split("$$$$$");
-                        @: <td>@s[1]</td>
+                        @: <td>@Html.Raw(s[1])</td>
                     }
                 </tr>
                 }
@@ -79,18 +79,18 @@
                                                                           -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
                                                                           -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);">
                                 <img src="@item.ImageUrl" class="w-100">
-                                <p class="h3-responsive name">@item.Title</p>
+                                <p class="h3-responsive name">@Html.Raw(item.Title)</p>
 
 
 
                                 @foreach (var val in ItemFields)
                                 {
                                     string[] s = val.Value.Split("$$$$$");
-                                    @: <p class="@val.Key.Replace(" ","") text-center mx-2">@val.Key : @s[1]</p>
+                                    @: <p class="@val.Key.Replace(" ","") text-center mx-2">@Html.Raw(val.Key) : @Html.Raw(s[1])</p>
                                 }
-                                <p class="p-3" style="max-height: 20.5em; overflow: hidden;">
-                                    @item.Description
-                                </p>
+                            <p class="p-3" style="max-height: 20.5em; overflow: hidden;">
+                                @Html.Raw(item.Description)
+                            </p>
 
 
                                 <div class="btn-group w-100 d-flex justify-content-center">
@@ -149,6 +149,8 @@
         $(document).ready(function () {
             $('table').css('opacity', '0');
             $('table').css('height', '0px');
+            var href = $('#theme').attr();
+            console.log($('#theme'));
         });
 
         $('.view-table').click(function () {

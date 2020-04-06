@@ -18,14 +18,17 @@ namespace LastTask1.Controllers
         private readonly ItemContext _itemContext;
         private readonly CollectionContext _collectionContext;
         private readonly UserManager<User> _userManager;
+        public MarkdownSharp.Markdown markdown = new MarkdownSharp.Markdown();
+        private readonly CommentContext _commentContext;
+        private readonly LikeContext _likeContext;
 
-
-        
-        public CollectionController(CollectionContext context, ItemContext itemContext, UserManager<User> userManager)
+        public CollectionController(LikeContext likeContext, CommentContext commentContext, CollectionContext context, ItemContext itemContext, UserManager<User> userManager)
         {
             _itemContext = itemContext;
             _collectionContext = context;
             _userManager = userManager;
+            _commentContext = commentContext;
+            _likeContext = likeContext;
         }
 
         public Collection GetCollection(string collectionId)
@@ -80,20 +83,13 @@ namespace LastTask1.Controllers
         {
             
             User User = await _userManager.FindByNameAsync(userName);
-            List<Collection> AllCollections = _collectionContext.Collections.ToList();
-            List<Collection> UserCollection = new List<Collection>();
-            foreach(var collection in AllCollections)
-            {
-                if(collection.UserName == User.UserName)
-                {
-                    UserCollection.Add(collection);
-                }
-            }
-
+            List<Collection> AllCollections = _collectionContext.Collections.ToList().OrderBy(i => i.nItems).ToList();
+            
+            
             MyCollectionsViewModel model = new MyCollectionsViewModel
             {
                 User = User,
-                Collections = UserCollection
+                Collections = AllCollections
             };
             return View(model);
         }
@@ -131,20 +127,22 @@ namespace LastTask1.Controllers
                 ["text"] = texts
             };
 
-            
+            string description = markdown.Transform(Description);
+            string title = markdown.Transform(Title);
             Collection collection = new Collection
             { 
                 Id = Guid.NewGuid().ToString(), 
                 UserName = User.UserName, 
                 UserId = User.Id,
                 nItems = 0,
-                Title = Title,
+                Title = title,
                 Theme = Theme,
-                Description = Description,
+                Description = description,
                 ShortDescription = ShortDescription,
                 Fields = JsonSerializer.Serialize(dictionary),
                 Img = ImageUrl,
-                Type = "Collection"
+                Type = "Collection",
+                Date = DateTime.Now
             };
             User.nCollections++;
             await _userManager.UpdateAsync(User);
@@ -163,15 +161,36 @@ namespace LastTask1.Controllers
             _collectionContext.Collections.Remove(collection);
             await _collectionContext.SaveChangesAsync();
             var items = _itemContext.Items.ToList();
+            var comments = _commentContext.Comments.ToList();
+            var likes = _likeContext.Likes.ToList();
             foreach (var item in items)
+            {
+                foreach(var comment in comments)
+                {
+                    if(comment.ItemId == item.Id)
+                    {
+                        user.nComments--;
+                        _commentContext.Remove(comment);
+                    }
+                }
+                foreach(var like in likes)
+                {
+                    if(like.ItemId == item.Id)
+                    {
+                        user.nLikes--;
+                        _likeContext.Remove(like);
+                    }
+                }
                 if (item.CollectionId == collectionId)
-                { 
+                {
                     _itemContext.Remove(item);
                     user.nItems--;
                 }
+            }
             user.nCollections--;
             await _userManager.UpdateAsync(user);
-
+            await _likeContext.SaveChangesAsync();
+            await _commentContext.SaveChangesAsync();
             await _itemContext.SaveChangesAsync();
             return RedirectToAction("Index", "Profile", new { userName = userName });
         }

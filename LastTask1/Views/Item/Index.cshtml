@@ -1,10 +1,35 @@
-﻿@model LastTask1.ViewModels.ItemViewModel
+﻿@model LastTask1.ViewModels.MyItemsViewModel
 @{
     ViewData["Title"] = "Item";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Item @Model.Item.Title</h1>
-<form asp-action="Collection" asp-controller="Collection" method="post">
-    <button class="btn btn-outline-success" name="collectionId" value="@Model.Collection.Id">Back to list</button>
-</form>
+    <div class="container grid">
+        <div class="row m-0 p-0">
+            @foreach (var item in Model.Items)
+            {
+                <div class="item col-xl-4 col-md-6 col-12 mt-3 mx-0" id="card">
+                    <div class="card w-100 bg-white d-inline-flex flex-column align-items-center justify-content-between" style="box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
+                                                                      -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
+                                                                      -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);">
+                        <img src="@item.ImageUrl" class="w-100">
+                        <p class="h3-responsive name">@Html.Raw(item.Title)</p>
+
+                        <p class="p-3" style="max-height: 20.5em; overflow: hidden;">
+                            @Html.Raw(item.Description)
+                        </p>
+
+                        <div class="btn-group w-100 d-flex justify-content-center">
+                            <form asp-controller="Item" asp-action="Item" asp-route-itemId="@item.Id" class="w-100 d-flex justify-content-center h-100">
+                                <div class="btn-group w-100">
+                                    <button type="submit" name="itemId" value="@item.Id" class="btn btn-success p-0 pt-2 pb-2">View</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>

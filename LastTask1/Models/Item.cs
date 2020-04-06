@@ -23,6 +23,7 @@ namespace LastTask1.Models
         public string OptionalFields { get; set; }
         public int nLikes { get; set; }
         public int nComments { get; set; }
+        public DateTime Date { get; set; }
 
     }
 }

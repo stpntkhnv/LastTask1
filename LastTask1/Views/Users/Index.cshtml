@@ -5,7 +5,7 @@
 
     <link href="~/css/LoginRegister.css" rel="stylesheet" />
     <div class="container p-0">
-        <table id="dtMaterialDesignExample" class="table table-striped bg-dark m-0 p-0" cellspacing="0" width="100%">
+        <table id="dtMaterialDesignExample" class="table table-striped bg-dark  m-0 p-0" cellspacing="0" width="100%" >
             <thead class="w-100 bg-info">
                 <tr class="bg-dark text-white w-100">
                     <th class="th-sm">
@@ -19,8 +19,9 @@
                     </th>                   
                 </tr>
             </thead>
-            <tbody>
-                @foreach (var user in Model.Users)
+            <tbody @if (Context.Request.Cookies["theme"] == "dark") {@: style = "color: black !important;"
+                   }>
+        @foreach (var user in Model.Users)
                 {
                 <tr @if (user.UserName == User.Identity.Name) {
                     @: class="bg-success" 
@@ -36,15 +37,15 @@
                     </th>
 
                     <th class="th-sm">
-                        <p class="font-weight-bold">@user.Role</p>
+                        <p class="font-weight-bold text-black-50">@user.Role</p>
 
                         @if (user.Role == "user")
                         {
-                            <a class="nav-link" asp-controller="Users" asp-action="ChangeRole" asp-route-role="admin" asp-route-userName="@user.UserName">Set admin</a>
+                            <a  asp-controller="Users" asp-action="ChangeRole" asp-route-role="admin" asp-route-userName="@user.UserName">Set admin</a>
                         }
                         else
                         {
-                            <a class="nav-link" asp-controller="Users" asp-action="ChangeRole" asp-route-role="user" asp-route-userName="@user.UserName">Set user</a>
+                            <a  asp-controller="Users" asp-action="ChangeRole" asp-route-role="user" asp-route-userName="@user.UserName">Set user</a>
                         }
                     </th>
                     <th class="th-sm">

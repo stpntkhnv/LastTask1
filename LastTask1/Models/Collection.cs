@@ -19,5 +19,7 @@ namespace LastTask1.Models
         public string Img { get; set; }
         public int nItems { get; set; }
         public string Fields { get; set; }
+
+        public DateTime Date { get; set; }
     }
 }

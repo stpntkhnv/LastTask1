@@ -92,41 +92,53 @@
 <script type="text/javascript" src="~/js/ImageUpload.js"></script>
 <script type="text/javascript">
     function addField() {
-        var type = $('.select').val();
+        var s = $('.select').val();
+        var type = "";
+        if (s == "Checkbox" || s == "Чекбокс") {
+            type = "Bool";
+        } else if (s == "Text" || s == "Текст") {
+            type = "Text";
+        } else if (s == "Date" || s == "Дата") {
+            type = "Date";
+        } else if (s == "String" || s == "Строка") {
+            type = "String"
+        } else if (s == "Number" || s == "Число") {
+            type = "Int"
+        };
 
         switch (type) {
             case 'Text':
                 $('<div class="d-flex w-100 mt-5 align-items-center parent bool">' +
 
 				'<input type="text" class="w-100 ml-5 form-control" placeholder="Name of field"  id="Text" name="Text">' +
-				'<button type="button" class="btn btn-danger dop-area" onclick="deleteField(event.target)">'+@Localizer["Delete"]+'</button>' +
+				'<button type="button" class="btn btn-danger dop-area" onclick="deleteField(event.target)">Delete</button>' +
 				'</div>').insertBefore($(".insert-before"));
 			break;
 		case 'Bool':
 			$('<div class="d-flex w-100 mt-5 align-items-center parent bool">' +
 
 				'<input type="text" class="w-100 ml-5 form-control" placeholder="Name of field"  id="Bool" name="Bool">' +
-				'<button type="button" class="btn btn-danger dop-area" onclick="deleteField(event.target)">'+@Localizer["Delete"]+'</button>' +
+				'<button type="button" class="btn btn-danger dop-area" onclick="deleteField(event.target)">Delete</button>' +
 				'</div>').insertBefore($(".insert-before"));
 			break;
 		case 'String':
 			$('<div class="d-flex w-100 mt-5 align-items-center parent string" >' +
 
 				'<input type="text" class="w-100 ml-5 form-control dop-area" placeholder="Name of field" id="Str" name="Str">' +
-				'<button type="button" class="btn btn-danger" onclick="deleteField(event.target)">'+@Localizer["Delete"]+'</button>' +
+				'<button type="button" class="btn btn-danger" onclick="deleteField(event.target)">Delete</button>' +
 				'</div>').insertBefore($(".insert-before"));
 			break;
 		case 'Date':
 			$('<div class="d-flex w-100 mt-5 align-items-center parent  date" >' +
 
 				'<input type="text" class="w-100 ml-5 form-control dop-area" placeholder="Name of field" id="Date" name="Date">' +
-				'<button type="button" class="btn btn-danger" onclick="deleteField(event.target)">'+@Localizer["Delete"]+'</button>' +
+				'<button type="button" class="btn btn-danger" onclick="deleteField(event.target)">Delete</button>' +
 				'</div>').insertBefore($(".insert-before"));
 			break;
 		case 'Int':
 			$('<div class="d-flex w-100 mt-5 align-items-center parent int" >' +
 				'<input type="text" class="w-100 ml-5 form-control dop-area" placeholder="Name of field" id="Int" name="Int">' +
-				'<button type="button" class="btn btn-danger" onclick="deleteField(event.target)">'+@Localizer["Delete"]+'</button>' +
+				'<button type="button" class="btn btn-danger" onclick="deleteField(event.target)">Delete</button>' +
 				'</div>').insertBefore($(".insert-before"));
 			break;
 

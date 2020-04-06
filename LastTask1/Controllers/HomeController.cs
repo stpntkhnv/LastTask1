@@ -30,10 +30,33 @@ namespace LastTask1.Controllers
 
         public IActionResult Index() 
         {
+            List<Collection> AllCollections = _collectionContext.Collections.ToList().OrderByDescending(i => i.nItems).ToList();
+            List<Collection> Collections = new List<Collection>();
+            if (AllCollections.ToArray().Length > 10)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    Collections.Add(AllCollections[i]);
+                }
+            }
+            else Collections = AllCollections;
+            
+            List<Item> AllItems = _itemContext.Items.ToList().OrderByDescending(i => i.Date).ToList();
+            List<Item> Items = new List<Item>();
+            if (AllItems.ToArray().Length > 20)
+            {
+                for (int i = 0; i < 20; i++)
+                {
+                    Items.Add(AllItems[i]);
+                }
+            }
+            else Items = AllItems;
+            
+            
             HomeViewModel model = new HomeViewModel
             {
-                Items = _itemContext.Items.ToList(),
-                Collections = _collectionContext.Collections.ToList(),
+                Items = Items,
+                Collections = Collections,
                 Tags = _tagContext.Tags.ToList()
             };
             return View(model); 
