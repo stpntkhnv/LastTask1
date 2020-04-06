@@ -76,7 +76,32 @@ namespace LastTask1.Controllers
             return RedirectToAction("Item", "Item", new { itemId = itemId});
         }
 
+        public string[] GetTags(string val)
+        {
+            string[] s = new string[1];
+            s[0] = " ";
+            if (val == null) return s;
+            if(val.Contains(" "))
+            {
+                s = val.Split(" ");
+                val = s.Last();
+            };
+            
+            List<Tag> AllTags = _tagContext.Tags.ToList();
+            List<string> SuitableTags = new List<string>();
+            foreach(var tag in AllTags)
+            {
+                if (tag.Text.Contains(val))
+                    SuitableTags.Add(tag.Text);
 
+            }
+            foreach (var b in s)
+            {
+                SuitableTags.Remove(b);
+            }
+                string[] result = SuitableTags.ToArray(); 
+            return result;
+        }
         public async Task<IActionResult> ChangeLike(string userName, string itemId)
         {
             List<Like> Likes = _likeContext.Likes.ToList();

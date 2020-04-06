@@ -28,7 +28,8 @@
         </form>
     </div>
     <div class="col d-flex flex-column align-items-center " id="cont">
-
+        <button class="btn btn-success view-table">Table</button>
+        <button class="btn btn-success view-cards">Cards</button>
         <h1>List items:</h1>
         <table cellpadding="0" cellspacing="0" border="0" id="table" class="sortable table table-striped table-responsive">
             <thead class="light-green white-text">
@@ -67,7 +68,7 @@
 <script type="text/javascript" src="~/js/TableSort2.js"></script>
 
 
-<div class="grid container-fluid m-0 p-0" style="display:none">
+<div class="grid container-fluid m-0 p-0">
                 <div class="row">
                     @foreach (var item in Model.Items)
                     {
@@ -137,20 +138,28 @@
             }
         });
 
-        // bind sort button click
-        $('.sort-by-button-group').on('click', 'button', function () {
-            var sortValue = $(this).attr('data-sort-value');
-            $grid.isotope({ sortBy: sortValue });
-        });
-
-        // change is-checked class on buttons
-        $('.button-group').each(function (i, buttonGroup) {
-            var $buttonGroup = $(buttonGroup);
-            $buttonGroup.on('click', 'button', function () {
-                $buttonGroup.find('.is-checked').removeClass('is-checked');
-                $(this).addClass('is-checked');
-            });
-        });
+     
 
     </script>
 
+    <script>
+        
+
+        $(document).ready(function () {
+            $('table').css('opacity', '0');
+            $('table').css('height', '0px');
+        });
+
+        $('.view-table').click(function () {
+            $('.grid').css('display', 'none');
+            $('table').css('opacity', '100');
+            $('table').css('height', 'auto');
+        });
+
+        $('.view-cards').click(function () {
+            $('.grid').css('display', 'block');
+            $('table').css('opacity', '0');
+            $('table').css('height', '0px');
+        });
+
+    </script>

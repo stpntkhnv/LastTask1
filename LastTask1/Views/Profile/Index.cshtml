@@ -95,7 +95,7 @@
     </div>
 
 
-    <div class="container-fluid nt-5 block-content block-content-likes grid p-0 m-0" style="display: none">
+    <div class="container-fluid nt-5 block-content block-content-likes grid p-0 m-0">
 
         <div class="row p-0 m-0">
             @foreach (var item in Model.Likes)
@@ -130,7 +130,7 @@
     </div>
 
 
-    <div class="container-fluid nt-5 block-content block-content-com grid p-0 m-0" style="display: none">
+    <div class="container-fluid nt-5 block-content block-content-com grid p-0 m-0">
 
         <div class="row p-0 m-0">
             @foreach (var item in Model.Comments)
@@ -164,7 +164,7 @@
 
     </div>
 
-    <div class="container-fluid nt-5 block-content block-content-items grid p-0 m-0" style="display: none">
+    <div class="container-fluid nt-5 block-content block-content-items grid p-0 m-0">
 
         <div class="row p-0 m-0">
             @foreach (var item in Model.Items)
@@ -211,6 +211,14 @@
 <script src="~/js/Collection.js" type="text/javascript"></script>
 <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
 <script type="text/javascript">
+    
+    window.onload = function () {
+
+                $('.block-content-com').css('display', 'none');
+                $('.block-content-items').css('display', 'none');
+                $('.block-content-likes').css('display', 'none');
+    };
+
     var $grid = $('.grid').isotope({
         itemSelector: '.item',
         masonry: {
@@ -221,19 +229,19 @@
 
     function viewCol() {
         $('.block-content').css('display', 'none');
-        $('.block-content-col').css('display', 'flex');
+        $('.block-content-col').css('display', 'block');
     }
     function viewCom() {
         $('.block-content').css('display', 'none');
-        $('.block-content-com').css('display', 'flex');
+        $('.block-content-com').css('display', 'block');
     }
     function viewIt() {
         $('.block-content').css('display', 'none');
-        $('.block-content-items').css('display', 'flex');
+        $('.block-content-items').css('display', 'block');
     }
     function viewLi() {
         $('.block-content').css('display', 'none');
-        $('.block-content-likes').css('display', 'flex');
+        $('.block-content-likes').css('display', 'block');
     }
 
     function deleteItem(e) {

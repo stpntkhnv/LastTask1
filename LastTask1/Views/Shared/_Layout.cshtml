@@ -13,15 +13,17 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 
     @RenderSection("styles", required: false)
 </head>
+    
 
 <body style="background: #c0eb75">
     <!--Main Navigation-->
     <header>
 
-        <nav class="navbar fixed-top navbar-expand-lg navbar-dark  d-flex scrolling-navbar" style="background: #343a40;">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark  d-flex scrolling-navbar" style="background: #343a40; height:70px;">
             <a class="navbar-brand" href="#"><strong>Itransition</strong></a>
 
             <!-- Search form -->
@@ -30,7 +32,9 @@
                     <input class="form-control mr-sm-2" type="Search" onkeyup="search(event)" placeholder="Search" aria-label="Search" id="searchString" style="flex: 1">
                 </div>
             </form>
+            <div class="bg-light searchResult" style="position: absolute; top:70px; left: 136px;">
 
+            </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -104,7 +108,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/js/mdb.min.js"></script>
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
@@ -116,6 +120,7 @@
 
 <script type="text/javascript">
     function search(event) {
+        $(".searchResult").empty();
         var elem = event.target;
         var val = $(elem).val();
         $.ajax({
@@ -124,10 +129,25 @@
                 val: val
             },
             success: function(result){
-                var item = JSON.parse(result);  
-                for (var i = 0; i < item[0].length; i++) {
-                    console.log(item[0][i].Title);
+
+
+
+                var item = JSON.parse(result);
+                console.log(item);
+                var width = $('.navbar-brand').css('width');
+                for (var j = 0; j < 3; j++) {
+                    for (var i = 0; i < item[j].length; i++) {
+                        console.log(item[j][i].Type);
+                        if (item[j][i].Type == "Comment") {
+                            $(".searchResult").prepend('<a href="/Item/Item/?itemId=' + item[j][i].ItemId + '"><p>' + item[j][i].Type + " : " + item[j][i].Text + '</p> </a>');
+                        } else if (item[j][i].Type == "Item") {
+                            $(".searchResult").prepend('<a href="/Item/Item/?itemId=' + item[j][i].Id + '"><p>' + item[j][i].Type + " : " + item[j][i].Title + '</p> </a>');
+                        } else {
+                            $(".searchResult").prepend('<a href="/Collection/Collection/?collectionId=' + item[j][i].Id + '"><p>' + item[j][i].Type + " : " + item[j][i].Title + '</p> </a>');
+                        };
+                    }
                 }
+                
                 
             }
         });

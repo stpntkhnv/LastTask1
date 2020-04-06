@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="~/css/ItemCreate.css" />
 
 
-
 <div class="container bg-white shadow">
     <form asp-controller="Item" asp-action="ItemCreate" asp-route-collectionId="@Model.Collection.Id">
         <div class="row  border bg-white" id="wrapper" style="box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
@@ -38,7 +37,7 @@
                     <input name="Title" required type="text" id="inputLGEx" class="form-control form-control-lg" placeholder="Title">
                 </div>
                 <div class="md-form form-lg m-5">
-                    <input name="Tags" type="text" id="inputLGEx" class="form-control form-control-lg" placeholder="Tags">
+                    <input name="Tags" type="text" id="tags" autocomplete="off" onkeyup="loadTags(event)" class="form-control form-control-lg" placeholder="Tags">
                 </div>
 
                 <input type="text" id="imgur_link" name="ImageUrl" value="" style="display:none;" />
@@ -61,8 +60,8 @@
                                     <div class="form-group green-border-focus mx-5">
                                         <label for="exampleFormControlTextarea5">@val</label>
                                         <textarea requared name="@val" class="form-control" id="Text" rows="3" style="height: 8em; resize: none;"></textarea>
-                                </div>
-                                        }
+                                    </div>
+                                }
                                 break;
                             case "int":
                                 foreach (var val in str.Value)
@@ -116,4 +115,56 @@
 
     </form>
 </div>
+
+
 <script type="text/javascript" src="~/js/ImageUpload.js"></script>
+<script>
+    function loadTags(e) {
+        var val = $(e.target).val();
+        console.log(val);
+        $.ajax({
+            url: "/Item/GetTags",
+            data: { val: val },
+            success: function (result) {
+                var tags = result;
+                function split( val ) {
+      return val.split(' ');
+    }
+    function extractLast( term ) {
+      return split( term ).pop();
+        }
+
+                $("#tags").autocomplete({
+                    minLength: 0,
+                    source: function( request, response ) {
+                      // delegate back to autocomplete, but extract the last term
+                      response( $.ui.autocomplete.filter(
+                        tags, extractLast( request.term ) ) );
+                    },
+                    focus: function() {
+                      // prevent value inserted on focus
+                      return false;
+                    },
+                    select: function( event, ui ) {
+                      var terms = split( this.value );
+                      // remove the current input
+                      terms.pop();
+                      // add the selected item
+                      terms.push( ui.item.value );
+                      // add placeholder to get the comma-and-space at the end
+                      terms.push( "" );
+                      this.value = terms.join( " " );
+                      return false;
+                    }
+                  });
+
+
+
+
+            }
+        });
+
+        
+    };
+
+</script>
