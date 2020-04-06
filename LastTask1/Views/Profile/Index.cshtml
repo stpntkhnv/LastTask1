@@ -18,7 +18,7 @@
     }
 </style>
 
-<div class="container p-0 bg-white shadow">
+<div class="container p-0 shadow theme-white">
     <div class="header w-100 d-flex flex-column justify-content-end p-0" style="height: 40vh; background: url(https://img2.goodfon.ru/original/1440x900/8/e7/killzone-shadow-fall-gorod-4443.jpg); background-size: cover; ">
 
         <div class="header-string w-100 row p-0 m-0 d-none d-md-flex" style="height: 70px;">
@@ -80,7 +80,6 @@
                             <form asp-controller="Collection" asp-action="Collection" class="w-100 d-flex justify-content-center h-100">
                                 <div class="btn-group w-100">
                                     <button type="submit" name="collectionId" value="@collection.Id" class="btn btn-success p-0 pt-2 pb-2">View</button>
-                                    <button type="submit" name="collectionId" value="@collection.Id" asp-controller="Collection" asp-action="Delete" class="btn btn-danger p-0 pt-2 pb-2">Delete</button>
                                 </div>
                             </form>
 
@@ -115,7 +114,6 @@
                             <form asp-controller="Item" asp-action="Item" class="w-100 d-flex justify-content-center h-100">
                                 <div class="btn-group w-100">
                                     <button type="submit" name="itemId" value="@item.Id" class="btn btn-success p-0 pt-2 pb-2">View</button>
-                                    <button type="submit" name="itemId" value="@item.Id" asp-controller="Item" asp-action="Delete" class="btn btn-danger p-0 pt-2 pb-2">Delete</button>
                                 </div>
                             </form>
 
@@ -150,7 +148,6 @@
                             <form asp-controller="Item" asp-action="Item" class="w-100 d-flex justify-content-center h-100">
                                 <div class="btn-group w-100">
                                     <button type="submit" name="itemId" value="@item.Id" class="btn btn-success p-0 pt-2 pb-2">View</button>
-                                    <button type="submit" name="itemId" value="@item.Id" asp-controller="Item" asp-action="Delete" class="btn btn-danger p-0 pt-2 pb-2">Delete</button>
                                 </div>
                             </form>
 
@@ -184,7 +181,6 @@
                             <form asp-controller="Item" asp-action="Item" class="w-100 d-flex justify-content-center h-100">
                                 <div class="btn-group w-100">
                                     <button type="submit" name="itemId" value="@item.Id" class="btn btn-success p-0 pt-2 pb-2">View</button>
-                                    <button type="submit" name="itemId" value="@item.Id" asp-controller="Item" asp-action="Delete" onclick="deleteItem(this)" class="btn btn-danger p-0 pt-2 pb-2">Delete</button>
                                 </div>
                             </form>
 

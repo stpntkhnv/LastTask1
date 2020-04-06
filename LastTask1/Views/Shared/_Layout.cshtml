@@ -17,13 +17,39 @@
 
     @RenderSection("styles", required: false)
 </head>
+<style>
+    @if (Context.Request.Cookies["theme"] == "dark")
+    {
+        @:.card{
+           @: background: #474a51 !important;  }  
+           @:*{color: white;}      
+           @:.btn-success{background: #1bb76e !important}
+           @: .container, #size , #wrapper{background: #2e3035 !important;}
+              @: #size1{background: #1d1d1d !important; border: none !important}
+                 @: input, textarea, select, select option {background: #2e3035 !important; color: white !important;}
+                    @: .drag{background: #2e3035; color: white !important;border-color: white !important;}
+                       @: #searchString{background: black !important;}
+    }
+    else
+    {
+        @:.card{
+           @: background: white !important; }
+                                  @:  #wrapper{background: white !important;}
+                                      @: .theme-white{background: white !important;}
+    }
     
+</style>
 
-<body style="background: #c0eb75">
+<body style="background: @if (Context.Request.Cookies["theme"] == "dark") {
+     @:#1d1d1d
+ }else{ 
+     @: #c0eb75 
+      }   
+">
     <!--Main Navigation-->
     <header>
 
-        <nav class="navbar fixed-top navbar-expand-lg navbar-dark  d-flex scrolling-navbar" style="background: #343a40; height:70px;">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark  d-flex scrolling-navbar" style="background: black; height:70px;">
             <a class="navbar-brand" href="#"><strong>Itransition</strong></a>
 
             <!-- Search form -->
@@ -60,9 +86,38 @@
                             <a class="nav-link" href="#">My items</a>
                         </li>
 
+
+
+
+
+
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Users" asp-action="Index" asp-route-userName="@User.Identity.Name">Admin panel</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Account" asp-action="ChangeTheme" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">
+                                @if (Context.Request.Cookies["theme"] == "light")
+                                {
+                                    @: <i class="far fa-sun"></i>
+                                }
+                                else
+                                {
+                                    @: <i class="far fa-moon"></i>
+                                }
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            
+                                
+                            <form asp-controller="Account" asp-action="GetCulture" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">
+                                <button type="submit" class="btn btn-success rounded py-1" name="code" value="ru">ru</button>
+                                <button type="submit" class="btn btn-success rounded py-1" name="code" value="en">en</button>
+                            </form>
+                                    
+                               
+                                
+                        </li>
+
                     }
 
                 </ul>

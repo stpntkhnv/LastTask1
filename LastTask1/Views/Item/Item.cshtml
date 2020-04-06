@@ -41,7 +41,9 @@
 
         </div>
         <div class="col border-left">
-            <h1 class="mt-2 border-bottom border-dark mb-5">Info about item</h1>
+            <h1 class="mt-2 border-bottom  @if (Context.Request.Cookies["theme"] == "dark") { @: border-white
+            } else {@: border-dark
+                } mb-5">Info about item</h1>
 
             @{var Fields = JsonConvert.DeserializeObject<Dictionary<string, string>>(Model.Item.OptionalFields);
 

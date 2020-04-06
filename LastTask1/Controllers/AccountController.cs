@@ -5,6 +5,9 @@ using LastTask1.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Web;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.Globalization;
 
 namespace CustomIdentityApp.Controllers
 {
@@ -49,6 +52,36 @@ namespace CustomIdentityApp.Controllers
             return View(model);
         }
 
+
+        public IActionResult ChangeTheme(string returnUrl)
+        {
+            if (Request.Cookies["theme"] == null)
+            {
+                Response.Cookies.Append("theme", "dark", new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
+            }
+            else if (Request.Cookies["theme"] == "dark")
+            {
+                Response.Cookies.Delete("theme");
+                Response.Cookies.Append("theme", "light", new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
+            }
+            else
+            {
+                Response.Cookies.Delete("theme");
+                Response.Cookies.Append("theme", "dark", new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
+            };
+            return LocalRedirect(returnUrl);
+        }
+
+
+        public IActionResult GetCulture(string code, string returnUrl)
+        {
+            if (!String.IsNullOrEmpty(code))
+            {
+                CultureInfo.CurrentCulture = new CultureInfo(code);
+                CultureInfo.CurrentUICulture = new CultureInfo(code);
+            }
+             return LocalRedirect(returnUrl);
+        }
 
         [HttpGet]
         public IActionResult Login(string returnUrl = null)

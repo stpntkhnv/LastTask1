@@ -117,7 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="a" xml:space="preserve">
-    <value>Rus</value>
+  <data name="lastItems" xml:space="preserve">
+    <value>Последние добавленные айтемы</value>
+  </data>
+  <data name="topCollect" xml:space="preserve">
+    <value>Топ коллекций</value>
   </data>
 </root>

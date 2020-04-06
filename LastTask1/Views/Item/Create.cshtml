@@ -3,17 +3,19 @@
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link rel="stylesheet" href="~/css/ItemCreate.css" />
+<link rel="stylesheet" href="~/css/ItemCreate2.css" />
 
 
-<div class="container bg-white shadow">
+<div class="container">
     <form asp-controller="Item" asp-action="ItemCreate" asp-route-collectionId="@Model.Collection.Id">
         <div class="row  border bg-white" id="wrapper" style="box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
 													  -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
 													  -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);">
             <div class="col-lg-4 border-dark border h-100 m-lg-3 mt-lg-5 sticky-top text-center d-flex flex-column align-items-center left-side" id="left-side">
                 <h1 class="mt-3 mb-5">Create new item</h1>
-                <div id="drag" class="drag w-75 bg-light border border-dark d-flex flex-column justify-content-center align-items-center" style="border-radius: 5%; border-style: dashed !important;">
+                <div id="drag" class="drag w-75 @if (Context.Request.Cookies["theme"] == "light") {
+                @: bg-light
+                 } border border-dark d-flex flex-column justify-content-center align-items-center" style="border-radius: 5%; border-style: dashed !important;">
                     <p id="p-small" class="font-italic " style="display: none; font-size: 30px">Click to choose image</p>
                     <div class="w-100 h-100">
                         <input required type="file" class="w-100 h-100" style="opacity: 0; cursor:pointer;" onchange="upload(this.files[0])" name="">

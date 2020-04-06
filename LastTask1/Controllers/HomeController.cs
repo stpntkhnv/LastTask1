@@ -14,16 +14,18 @@ namespace LastTask1.Controllers
     {
         private readonly ItemContext _itemContext;
         private readonly CollectionContext _collectionContext;
+        private readonly TagContext _tagContext;
 
         
 
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, ItemContext itemContext, CollectionContext collectionContext)
+        public HomeController(ILogger<HomeController> logger, TagContext tagContext, ItemContext itemContext, CollectionContext collectionContext)
         {
             _logger = logger;
             _collectionContext = collectionContext;
             _itemContext = itemContext;
+            _tagContext = tagContext;
         }
 
         public IActionResult Index() 
@@ -31,7 +33,8 @@ namespace LastTask1.Controllers
             HomeViewModel model = new HomeViewModel
             {
                 Items = _itemContext.Items.ToList(),
-                Collections = _collectionContext.Collections.ToList()
+                Collections = _collectionContext.Collections.ToList(),
+                Tags = _tagContext.Tags.ToList()
             };
             return View(model); 
         }
