@@ -12,19 +12,19 @@
 													  -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
 													  -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);">
             <div class="col-lg-4 border-dark border h-100 m-lg-3 mt-lg-5 sticky-top text-center d-flex flex-column align-items-center left-side" id="left-side">
-                <h1 class="mt-3 mb-5">Create new item</h1>
+                <h1 class="mt-3 mb-5">@Localizer["Head"]</h1>
                 <div id="drag" class="drag w-75 @if (Context.Request.Cookies["theme"] == "light") {
                 @: bg-light
                  } border border-dark d-flex flex-column justify-content-center align-items-center" style="border-radius: 5%; border-style: dashed !important;">
-                    <p id="p-small" class="font-italic " style="display: none; font-size: 30px">Click to choose image</p>
+                    <p id="p-small" class="font-italic " style="display: none; font-size: 30px">@Localizer["Click"]</p>
                     <div class="w-100 h-100">
                         <input required type="file" class="w-100 h-100" style="opacity: 0; cursor:pointer;" onchange="upload(this.files[0])" name="">
                     </div>
                     <div class="image-small"></div>
-                    <p style="position: absolute; font-size: 20px; font-style: italic" class="w-75 hide">Please, drag your image here</p>
+                    <p style="position: absolute; font-size: 20px; font-style: italic" class="w-75 hide">@Localizer["Drag"]</p>
                 </div>
-                <p class="hide">Collection: animals</p>
-                <p class="mb-5 hide">Creater: admin</p>
+                <p class="hide">@Localizer["Collection"]: @Model.Collection.Title</p>
+                <p class="mb-5 hide">@Localizer["Creater"]: @Model.Collection.UserName</p>
 
 
 
@@ -33,19 +33,19 @@
 
             <div class="col" style="min-height: 90vh">
 
-                <h3 class="pt-5 border-bottom border-dark" id="h3-small">Info about item</h3>
+                <h3 class="pt-5 border-bottom border-dark" id="h3-small">@Localizer["Info"]</h3>
 
                 <div class="md-form form-lg m-5">
-                    <input name="Title" required type="text" id="inputLGEx" class="form-control form-control-lg" placeholder="Title">
+                    <input name="Title" required type="text" id="inputLGEx" class="form-control form-control-lg" placeholder="@Localizer["Title"]">
                 </div>
                 <div class="md-form form-lg m-5">
-                    <input name="Tags" type="text" id="tags" autocomplete="off" onkeyup="loadTags(event)" class="form-control form-control-lg" placeholder="Tags">
+                    <input name="Tags" type="text" id="tags" autocomplete="off" onkeyup="loadTags(event)" class="form-control form-control-lg" placeholder="@Localizer["Tags"]">
                 </div>
 
                 <input type="text" id="imgur_link" name="ImageUrl" value="" style="display:none;" />
 
                 <div class="form-group green-border-focus m-5">
-                    <label for="exampleFormControlTextarea5">Description</label>
+                    <label for="exampleFormControlTextarea5">@Localizer["Description"]</label>
                     <textarea name="Description" required class="form-control" id="exampleFormControlTextarea5" rows="3" style="height: 8em; resize: none;"></textarea>
                 </div>
 
@@ -106,9 +106,9 @@
                 }
 
                 <div class="btn-group w-75 mt-2 mb-3" style="margin-left: 12.5%;">
-                    <a asp-controller="Collection" asp-action="Collection" asp-route-collectionId="@Model.Collection.Id" class="btn btn-dark">Back</a>
-                    <button type="submit" name="goToNew" value="false" class="btn btn-success">Save</button>
-                    <button type="submit" name="goToNew" value="true" class="btn btn-success">Save&New</button>
+                    <a asp-controller="Collection" asp-action="Collection" asp-route-collectionId="@Model.Collection.Id" class="btn btn-dark">@Localizer["Back"]</a>
+                    <button type="submit" name="goToNew" value="false" class="btn btn-success">@Localizer["Create"]</button>
+                    <button type="submit" name="goToNew" value="true" class="btn btn-success">@Localizer["New"]</button>
                 </div>
 
             </div>

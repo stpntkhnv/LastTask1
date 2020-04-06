@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 
     @RenderSection("styles", required: false)
+    @using Microsoft.AspNetCore.Mvc.Localization
+
+    @inject IViewLocalizer Localizer
 </head>
 <style>
     @if (Context.Request.Cookies["theme"] == "dark")
@@ -55,7 +58,7 @@
             <!-- Search form -->
             <form class="form-inline d-flex" style="flex: 1">
                 <div class="md-form my-0 d-flex" style="flex: 1">
-                    <input class="form-control mr-sm-2" type="Search" onkeyup="search(event)" placeholder="Search" aria-label="Search" id="searchString" style="flex: 1">
+                    <input class="form-control mr-sm-2" type="Search" onkeyup="search(event)" placeholder="@Localizer["Search"]" aria-label="Search" id="searchString" style="flex: 1">
                 </div>
             </form>
             <div class="bg-light searchResult" style="position: absolute; top:70px; left: 136px;">
@@ -74,10 +77,10 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item active">
-                            <a class="nav-link" asp-controller="Home" asp-action="Index">Home </a>
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">@Localizer["Home"] </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Profile" asp-action="Index" asp-route-userName="@User.Identity.Name">My profile</a>
+                            <a class="nav-link" asp-controller="Profile" asp-action="Index" asp-route-userName="@User.Identity.Name">@Localizer["MyPage"]</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-action="Index" asp-controller="Collection" asp-route-userName="@User.Identity.Name">My collections</a>
@@ -92,7 +95,7 @@
 
 
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Users" asp-action="Index" asp-route-userName="@User.Identity.Name">Admin panel</a>
+                            <a class="nav-link" asp-controller="Users" asp-action="Index" asp-route-userName="@User.Identity.Name">@Localizer["Admin"]</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Account" asp-action="ChangeTheme" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">
@@ -109,9 +112,9 @@
                         <li class="nav-item">
                             
                                 
-                            <form asp-controller="Account" asp-action="GetCulture" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">
-                                <button type="submit" class="btn btn-success rounded py-1" name="code" value="ru">ru</button>
-                                <button type="submit" class="btn btn-success rounded py-1" name="code" value="en">en</button>
+                            <form asp-controller="Account" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">
+                                <button type="submit" class="btn btn-success rounded py-1" name="culture" value="ru">ru</button>
+                                <button type="submit" class="btn btn-success rounded py-1" name="culture" value="en">en</button>
                             </form>
                                     
                                
@@ -129,7 +132,7 @@
                         </li>
                         <li class="nav-item">
                             <form asp-controller="Account" asp-action="Logout">
-                                <button type="submit" class="btn btn-danger m-0" asp-controller="Account" asp-action="Logout">Logout</button>
+                                <button type="submit" class="btn btn-danger m-0" asp-controller="Account" asp-action="Logout">@Localizer["Logout"]</button>
                             </form>
                         </li>
                     </ul>
@@ -140,8 +143,8 @@
                         <li class="nav-item align-items-center d-lg-flex d-none">
                             <div class="btn-group">
                                 <form asp-controller="Account" method="get">
-                                    <button type="submit" class="btn btn-success m-0" asp-controller="Account" asp-action="Login">Login</button>
-                                    <button type="submit" class="btn btn-warning m-0" asp-controller="Account" asp-action="Register">Register</button>
+                                    <button type="submit" class="btn btn-success m-0" asp-controller="Account" asp-action="Login">@Localizer["Login"]</button>
+                                    <button type="submit" class="btn btn-warning m-0" asp-controller="Account" asp-action="Register">@Localizer["Register"]</button>
                                 </form>
                             </div>
                         </li>
@@ -158,7 +161,6 @@
     <div class="container-fluid" id="container" style="margin-top: 70px;">
 
         @RenderBody()
-        <p id="result"></p>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

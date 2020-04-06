@@ -26,12 +26,12 @@
             <img src="https://pbs.twimg.com/profile_images/926488420645523456/hwKSfqNj.jpg" class="d-md-block d-none" style="width: 140px; height: 140px; position: relative; ">
 
             <div class="col h-100">
-                <h1 style="margin-left: 20px">admin</h1>
+                <h1 style="margin-left: 20px">@Model.User.UserName</h1>
             </div>
             <div class="col h-100 d-flex justify-content-end align-items-center">
 
-                <button class="btn btn-warning">Edit profile</button>
-                <button class="btn btn-danger">Delete account</button>
+                <button class="btn btn-warning">@Localizer["Edit"]</button>
+                <button class="btn btn-danger">@Localizer["Delete"]</button>
             </div>
         </div>
 
@@ -42,18 +42,22 @@
         <img src="https://pbs.twimg.com/profile_images/926488420645523456/hwKSfqNj.jpg" class="w-50 rounded-circle">
         <p>User admin</p>
         <div class="w-75 btn-group">
-            <button class="btn btn-warning">Edit profile</button>
-            <button class="btn btn-danger">Delete account</button>
+            <button class="btn btn-warning">@Localizer["Edit"]</button>
+            <button class="btn btn-danger">@Localizer["Delete"]</button>
         </div>
     </div>
 
 
     <div style="height: 70px" class="">
         <div class="d-flex row m-0 sel-view h-100" style="padding-left: 140px">
-            <div class="col-12 col-md select-view select-view-col d-flex justify-content-center align-items-center" onclick="viewCol()">Collections(@Model.User.nCollections)  </div>
-            <div class="col-12 col-md select-view select-view-items d-flex justify-content-center align-items-center" onclick="viewIt()">Items(@Model.User.nItems)</div>
-            <div class="col-12 col-md select-view select-view-com d-flex justify-content-center align-items-center" onclick="viewCom()">Comments(@Model.User.nComments)</div>
-            <div class="col-12 col-md select-view select-view-likes d-flex justify-content-center align-items-center" onclick="viewLi()">Likes(@Model.User.nLikes)</div>
+            <div class="col-12 col-md select-view select-view-col d-flex justify-content-center align-items-center" onclick="viewCol()">@Localizer["Collections"]
+                (@Model.User.nCollections)  </div>
+            <div class="col-12 col-md select-view select-view-items d-flex justify-content-center align-items-center" onclick="viewIt()">@Localizer["Items"]
+                (@Model.User.nItems)</div>
+            <div class="col-12 col-md select-view select-view-com d-flex justify-content-center align-items-center" onclick="viewCom()">@Localizer["Comments"]
+                (@Model.User.nComments)</div>
+            <div class="col-12 col-md select-view select-view-likes d-flex justify-content-center align-items-center" onclick="viewLi()">@Localizer["Likes"]
+                (@Model.User.nLikes)</div>
         </div>
 
     </div>
@@ -79,7 +83,7 @@
                         <div class="btn-group w-100 d-flex justify-content-center">
                             <form asp-controller="Collection" asp-action="Collection" class="w-100 d-flex justify-content-center h-100">
                                 <div class="btn-group w-100">
-                                    <button type="submit" name="collectionId" value="@collection.Id" class="btn btn-success p-0 pt-2 pb-2">View</button>
+                                    <button type="submit" name="collectionId" value="@collection.Id" class="btn btn-success p-0 pt-2 pb-2">@Localizer["View"]</button>
                                 </div>
                             </form>
 

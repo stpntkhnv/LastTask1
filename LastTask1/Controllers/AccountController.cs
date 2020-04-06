@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace CustomIdentityApp.Controllers
 {
@@ -26,6 +27,17 @@ namespace CustomIdentityApp.Controllers
         public IActionResult Register()
         {
             return View();
+        }
+
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+
+            return LocalRedirect(returnUrl);
         }
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)

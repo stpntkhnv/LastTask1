@@ -22,20 +22,20 @@
         <div class="col-12 col-lg-4 sticky-top d-flex flex-column rounded h-100 align-items-center mt-3 stick">
             <h1>@Model.Item.Title</h1>
             <div class="item-img w-75" style="height: 55vh; background: url(@Model.Item.ImageUrl); background-position: center;background-size: cover;"></div>
-            <p>Creater: @Model.Item.UserName</p>
-            <p>Collection: @Model.Item.CollectionName</p>
-            <p>Likes: @Model.Item.nLikes</p>
+            <p>@Localizer["Creater"]: @Model.Item.UserName</p>
+            <p>@Localizer["Collection"]: @Model.Item.CollectionName</p>
+            <p>@Localizer["Likes"]: @Model.Item.nLikes</p>
             <form asp-controller="Item" asp-action="ChangeLike">
                 <input type="text" name="userName" value="@User.Identity.Name" style="display: none" />
                 <input type="text" name="itemId" value="@Model.Item.Id" style="display:none" />
-                <button type="submit" class="btn btn-warning">Like</button>
+                <button type="submit" class="btn btn-warning">@Localizer["Like"]</button>
             </form>
-            <p>Comments: @Model.Item.nComments</p>
+            <p>@Localizer["Comments"]: @Model.Item.nComments</p>
             <form asp-controller="Item" class="w-100 m-2">
                 <div class="btn-group w-100 m-2">
-                    <button class="btn btn-blue-grey py-2 px-3" asp-action="Collection" asp-controller="Collection" name="collectionId" value="@Model.Collection.Id">Back</button>
-                    <button class="btn btn-warning py-2 px-3" asp-action="Edit" name="itemId" value="@Model.Item.Id">Edit item</button>
-                    <button class="btn btn-danger py-2 px-3" asp-action="Delete" name="itemId" value="@Model.Item.Id">Delete item</button>
+                    <button class="btn btn-blue-grey py-2 px-3" asp-action="Collection" asp-controller="Collection" name="collectionId" value="@Model.Collection.Id">@Localizer["Back"]</button>
+                    <button class="btn btn-warning py-2 px-3" asp-action="Edit" name="itemId" value="@Model.Item.Id">@Localizer["Edit"]</button>
+                    <button class="btn btn-danger py-2 px-3" asp-action="Delete" name="itemId" value="@Model.Item.Id">@Localizer["Delete"]</button>
                 </div>
             </form>
 
@@ -43,7 +43,9 @@
         <div class="col border-left">
             <h1 class="mt-2 border-bottom  @if (Context.Request.Cookies["theme"] == "dark") { @: border-white
             } else {@: border-dark
-                } mb-5">Info about item</h1>
+                } mb-5">
+                @Localizer["Info"]
+            </h1>
 
             @{var Fields = JsonConvert.DeserializeObject<Dictionary<string, string>>(Model.Item.OptionalFields);
 
@@ -54,21 +56,21 @@
             }
             }
 
-        <p class="h4-responsive mx-2 font-weight-bold">Description:</p>
+        <p class="h4-responsive mx-2 font-weight-bold">@Localizer["Description"]:</p>
         <p class="h5-responsive mx-2  border-bottom">@Model.Item.Description</p>
 
 
-            <h3 class="mt-5">Create comment</h3>
+        <h3 class="mt-5">@Localizer["CreateComment"]</h3>
             <div class="form-group green-border-focus mx-5">
                 <form asp-controller="Item" asp-action="CreateComment">
-                    <label for="exampleFormControlTextarea5">Your comment</label>
+                    <label for="exampleFormControlTextarea5">@Localizer["Your"]</label>
                     <input type="text" name="itemId" value="@Model.Item.Id" style="display: none;" />
-                    <textarea name="Text" placeholder="Input here" class="form-control" id="exampleFormControlTextarea5" rows="3" style="height: 8em; resize: none;"></textarea>
-                    <button type="submit" name="userName" value="@User.Identity.Name" class="btn btn-success">Create comment</button>
+                    <textarea name="Text" placeholder="@Localizer["Here"]" class="form-control" id="exampleFormControlTextarea5" rows="3" style="height: 8em; resize: none;"></textarea>
+                    <button type="submit" name="userName" value="@User.Identity.Name" class="btn btn-success">@Localizer["CreateComment"]</button>
                 </form>
 
             </div>
-            <h3>Comments: (@Model.Item.nComments)</h3>
+            <h3>@Localizer["Comments"]: (@Model.Item.nComments)</h3>
             @foreach (var comment in Model.Comments)
             {
                 <div class="comment border-top border-bottom m-0 p-3 mt-5 ">

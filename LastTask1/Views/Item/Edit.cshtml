@@ -1,11 +1,15 @@
-﻿@model LastTask1.ViewModels.ItemEditViewModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@model LastTask1.ViewModels.ItemEditViewModel
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <link rel="stylesheet" href="~/css/ItemCreate2.css" />
 
 
+@inject IViewLocalizer Localizer
 
 <div class="container h-100">
     <form asp-controller="Item" asp-action="ItemEdit">
@@ -13,15 +17,15 @@
 													  -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
 													  -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);">
             <div class="col-lg-4 border-dark border h-100 m-lg-3 mt-lg-5 sticky-top text-center d-flex flex-column align-items-center left-side" id="left-side">
-                <h1 class="mt-3 mb-5">Create new item</h1>
+                <h1 class="mt-3 mb-5">@Localizer["Head"]</h1>
                 <div id="drag" class="drag w-75 border border-dark d-flex flex-column justify-content-center align-items-center" style="border-radius: 5%; border-style: dashed !important; background: url(@Model.Item.ImageUrl) !important; background-position: center !important; background-size: cover !important;">
                     <div class="w-100 h-100">
                         <input type="file" class="w-100 h-100" value="@Model.Item.ImageUrl" style="opacity: 0; cursor:pointer;" onchange="upload(this.files[0])" name="">
                     </div>
                     <div class="image-small"></div>
                 </div>
-                <p class="hide">Collection: @Model.Item.CollectionName</p>
-                <p class="mb-5 hide">Creater: @Model.Item.UserName</p>
+                <p class="hide">@Localizer["Collection"]: @Model.Item.CollectionName</p>
+                <p class="mb-5 hide">@Localizer["Creater"]: @Model.Item.UserName</p>
 
 
 
@@ -33,17 +37,17 @@
                 <h3 class="pt-5 border-bottom border-dark" id="h3-small">Info about item</h3>
 
                 <div class="md-form form-lg m-5">
-                    <input name="Title" required type="text" id="inputLGEx" value="@Model.Item.Title" class="form-control form-control-lg" placeholder="Title">
+                    <input name="Title" required type="text" id="inputLGEx" value="@Model.Item.Title" class="form-control form-control-lg" placeholder="@Localizer["Title"]">
                 </div>
                 <div class="md-form form-lg m-5">
-                    <input name="Tags" value="@Model.Item.Tags" type="text" id="inputLGEx" class="form-control form-control-lg" placeholder="Tags">
+                    <input name="Tags" value="@Model.Item.Tags" type="text" id="inputLGEx" class="form-control form-control-lg" placeholder="@Localizer["Tags"]">
                 </div>
 
                 <input type="text" id="imgur_link" name="ImageUrl" value="@Model.Item.ImageUrl" style="display:none;" />
 
                 <div class="form-group green-border-focus m-5">
-                    <label for="exampleFormControlTextarea5">Description</label>
-                    <textarea name="Description"  required class="form-control" id="exampleFormControlTextarea5" rows="3" style="height: 8em; resize: none;">@Model.Item.Description</textarea>
+                    <label for="exampleFormControlTextarea5">@Localizer["Description"]</label>
+                    <textarea name="Description" required class="form-control" id="exampleFormControlTextarea5" rows="3" style="height: 8em; resize: none;">@Model.Item.Description</textarea>
                 </div>
 
 
@@ -53,46 +57,44 @@
                     string type = str.Value.Split("$$$$$")[0];
                     string value = str.Value.Split("$$$$$")[1];
                     string name = str.Key;
-                        switch (type)
-                        {
-                            case "int":                              
-                                    <div class="form-group  m-5" style="margin-left: 0%;">
-                                        <label for="exampleFormControlInput1">@name</label>
-                                        <input type="number" value="@value" class="form-control" id="Int" name="@name" style="flex: 1;">
-                                    </div>                               
-                                break;
-                            case "bool":
-                                
-                                    <div class="custom-control md-form form-lg m-5 w-75 d-flex  mr-sm-2" style="margin-left: 12.5%;">
-                                        <input type="checkbox" id="Bool" name="@name" value="@value" @if(value == "on")
-                                        {
-                                            @: checked="checked"
-                                        }
-                                        style="margin-left: 20px">
-                                        <label>@name</label>
-                                    </div>                                
-                                break;
-                            case "date":
-                               
-                                    <div class="md-form form-lg m-5 d-flex" style="margin-left: 12.5%;">
-                                        <input type="date" id="Date" name="@name" value="@value" class="form-control" mdbInput>
-                                        <label for="input">@name</label>
-                                    </div>                             
-                                break;
-                            case "str":
-                                
-                                    <div class="md-form form-lg m-5">
-                                        <input type="text" id="Str" class="form-control form-control-lg" name="@name" placeholder="@name" value="@value">
-</div>
-                                break;
-                                        }
+                    switch (type)
+                    {
+                        case "int":
+                            <div class="form-group  m-5" style="margin-left: 0%;">
+                                <label for="exampleFormControlInput1">@name</label>
+                                <input type="number" value="@value" class="form-control" id="Int" name="@name" style="flex: 1;">
+                            </div>
+                            break;
+                        case "bool":
+
+                            <div class="custom-control md-form form-lg m-5 w-75 d-flex  mr-sm-2" style="margin-left: 12.5%;">
+                                <input type="checkbox" id="Bool" name="@name" value="@value" @if (value == "on") { @: checked="checked"
+                                       }
+                                       style="margin-left: 20px">
+                                <label>@name</label>
+                            </div>
+                            break;
+                        case "date":
+
+                            <div class="md-form form-lg m-5 d-flex" style="margin-left: 12.5%;">
+                                <input type="date" id="Date" name="@name" value="@value" class="form-control" mdbInput>
+                                <label for="input">@name</label>
+                            </div>
+                            break;
+                        case "str":
+
+                            <div class="md-form form-lg m-5">
+                                <input type="text" id="Str" class="form-control form-control-lg" name="@name" placeholder="@name" value="@value">
+                            </div>
+                            break;
+                    }
 
 
                 }
 
                 <div class="btn-group w-75 mt-2 mb-3" style="margin-left: 12.5%;">
-                    <a asp-controller="Collection" asp-action="Collection" asp-route-collectionId="@Model.Item.CollectionId" class="btn btn-dark">Back</a>
-                    <button type="submit" name="itemId" value="@Model.Item.Id" class="btn btn-success">Save</button>
+                    <a asp-controller="Collection" asp-action="Collection" asp-route-collectionId="@Model.Item.CollectionId" class="btn btn-dark">@Localizer["Back"]</a>
+                    <button type="submit" name="itemId" value="@Model.Item.Id" class="btn btn-success">@Localizer["Save"]</button>
                 </div>
 
             </div>

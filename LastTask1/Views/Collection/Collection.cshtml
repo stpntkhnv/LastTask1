@@ -13,30 +13,30 @@
 -webkit-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);
 -moz-box-shadow:0px 1px 10px 5px rgba(0,0,0,0.33);">
     <div class="col-lg-4 h-100 border-right border-3 d-flex flex-column align-items-center">
-        <h1 class="text-center m-5">Collection @Model.Collection.Title</h1>
+        <h1 class="text-center m-5">@Localizer["Col"] @Model.Collection.Title</h1>
         <img src="@Model.Collection.Img" class="w-100">
-        <p class="h4-responsive pt-3">Theme: @Model.Collection.Theme</p>
-        <p class="h4-responsive">Items: @Model.Collection.nItems</p>
-        <p class="h4-responsive">Creater: @Model.User.UserName</p>
-        <p class="h4-responsive mt-5">Description:</p>
+        <p class="h4-responsive pt-3">@Localizer["Theme"] @Model.Collection.Theme</p>
+        <p class="h4-responsive">@Localizer["Items"] @Model.Collection.nItems</p>
+        <p class="h4-responsive">@Localizer["Creater"] @Model.User.UserName</p>
+        <p class="h4-responsive mt-5">@Localizer["Description"]</p>
         <p class="">@Model.Collection.Description</p>
         <form class="d-flex w-100 justify-content-center">
             <div class="btn-group w-75 rounded">
-                <button name="collectionId" asp-controller="Collection" asp-action="Create" value="@Model.Collection.Id" type="submit" class="btn btn-warning">Edit collection</button>
-                <button name="collectionId" asp-controller="Item" asp-action="Create" value="@Model.Collection.Id" type="submit" class="btn btn-success">Create item</button>
+                <button name="collectionId" asp-controller="Collection" asp-action="Create" value="@Model.Collection.Id" type="submit" class="btn btn-warning">@Localizer["Edit"]</button>
+                <button name="collectionId" asp-controller="Item" asp-action="Create" value="@Model.Collection.Id" type="submit" class="btn btn-success">@Localizer["Create"]</button>
             </div>
 
         </form>
     </div>
     <div class="col d-flex flex-column align-items-center " id="cont">
-        <button class="btn btn-success view-table">Table</button>
-        <button class="btn btn-success view-cards">Cards</button>
-        <h1>List items:</h1>
+        <button class="btn btn-success view-table">@Localizer["Table"]</button>
+        <button class="btn btn-success view-cards">@Localizer["Cards"]</button>
+        <h1>@Localizer["List"]:</h1>
         <table cellpadding="0" cellspacing="0" border="0" id="table" class="sortable table table-striped table-responsive">
             <thead class="light-green white-text">
                 <tr>
-                    <th class="text-white">Name</th>
-                    <th class="text-white">Desc</th>
+                    <th class="text-white">@Localizer["Name"]</th>
+                    <th class="text-white">@Localizer["Description"]</th>
                     @foreach (var field in Model.OptionalFields)
                     {
                         <th class="text-white">@field</th>
@@ -96,7 +96,7 @@
                                 <div class="btn-group w-100 d-flex justify-content-center">
                                     <form asp-controller="Item" asp-action="Item" class="w-100 d-flex justify-content-center h-100">
 
-                                        <button type="submit" name="itemId" value="@item.Id" class="btn btn-success p-0 pt-2 pb-2 rounded w-50">View</button>
+                                        <button type="submit" name="itemId" value="@item.Id" class="btn btn-success p-0 pt-2 pb-2 rounded w-50">@Localizer["View"]</button>
 
 
                                     </form>

@@ -69,7 +69,7 @@ namespace LastTask1
                 app.UseHsts();
             }
 
-            app.UseCulture();
+            
             var supportedCultures = new[]
             {
                 new CultureInfo("ru"),
